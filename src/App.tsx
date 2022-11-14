@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled, {} from 'styled-components';
+import { GlobalStyle } from './asserts/styles/global/globalStyles';
+import Component from './components/organisms/comment/comment';
+import data from './asserts/data/data.json';
 
-function App() {
+const Wrapp = styled.main `
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  `
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapp>
+      {console.log(data.comments[0])}
+      <GlobalStyle/>
+      <Component  content= {data.comments[0].content}
+                  username= {data.comments[0].user.username}
+                  createdAt= {data.comments[0].createdAt}
+                  score={data.comments[0].score} 
+                  userImage= {data.comments[0].user.image.png} />
+    </Wrapp>
   );
 }
 

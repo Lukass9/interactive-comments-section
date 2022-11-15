@@ -4,10 +4,10 @@ import styled from "styled-components"
 const Wrapp = styled.section`
     display: flex;
     flex-direction: column;
-    width: 95vw;
+    width: ${(props: {isReply: boolean})=> props.isReply? '80vw' : '95vw' };
     background-color: #ffffff;
     padding: 20px;
-    margin: 20px 0;
+    margin: 20px 0 0 0;
     border-radius: 10px;
 `
 const WrapRow = styled.div`
@@ -38,36 +38,52 @@ const Content = styled.p`
     line-height: 23px;
     letter-spacing: .5px;
 `
-interface Props {
-    bg: string;
-}
-const WrapButton = styled.div`
+
+const ScoreWrapp = styled.div`
     display: flex;
     align-items: center;
     background-color: ${(props: { bg: string; }) => props.bg};
-    /* background-color: #f5f6fa; */
-    border-radius: 5px;
+    border-radius: 10px;
 `
-const EditScore = styled.img`
-    padding: 15px;
+const WrapButton = styled(ScoreWrapp)`
+    cursor: pointer;
+`
+const EditScore = styled.p`
+    padding: 0 15px;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 8px 0;
+    color: #c3c4ef;
+    cursor: pointer;
+    &:hover{
+        color: #5457b6;
+    }
 `
 const Score = styled.div`
-    
+    display: flex;
+    justify-content: center;
+    color: #5457b6;
+    font-weight: 700;
+    min-width: 18px;
 `
-
-
+const Reply = styled.div` 
+    color: #5457b6;
+    padding: 5px;
+    font-weight: 700;
+`
 
 interface comments {
     username: string,
     content: string, 
     createdAt: string,
     score: number,
-    userImage: string
+    userImage: string,
+    isReply: boolean
 }
 
-const Component: React.FC <comments> = ({username,content,createdAt,score,userImage}) =>{
+const Comment: React.FC <comments> = ({username,content,createdAt,score,userImage, isReply}) =>{
     return (
-        <Wrapp>
+        <Wrapp isReply={isReply}>
             <WrapRow> 
                 <Avatar src={userImage} alt="avatar" />
                 <UserName> {username} </UserName>
@@ -77,18 +93,20 @@ const Component: React.FC <comments> = ({username,content,createdAt,score,userIm
                 {content}
             </Content>
             <WrapRowButton>
-                <WrapButton bg={"#f5f6fa"}>
-                    <EditScore src="\images\icon-plus.svg" alt="plus"/>
+                <ScoreWrapp bg={"#f5f6fa"}>
+                    {/* <EditScore src="\images\icon-plus.svg" alt="plus"/> */}
+                    <EditScore> + </EditScore>
                     <Score> {score} </Score>
-                    <EditScore src="\images\icon-minus.svg" alt="minus"/>
-                </WrapButton>
+                    <EditScore> - </EditScore>
+                    {/* <EditScore src="\images\icon-minus.svg" alt="minus"/> */}
+                </ScoreWrapp>
                 <WrapButton bg={"#fff"}>
                     <img src="\images\icon-reply.svg" alt="reply"/>
-                    <p>Reply</p>
+                    <Reply>Reply</Reply>
                 </WrapButton>
             </WrapRowButton>
         </Wrapp>
     )
 }
 
-export default Component
+export default Comment

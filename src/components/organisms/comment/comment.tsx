@@ -2,13 +2,24 @@ import React from "react";
 import styled from "styled-components"
 
 const Wrapp = styled.section`
+    position: relative;
     display: flex;
     flex-direction: column;
-    width: ${(props: {isReply: boolean})=> props.isReply? '80vw' : '95vw' };
+    width: ${(props: {isReply: boolean})=> props.isReply? '90vw' : '95vw' };
     background-color: #ffffff;
     padding: 20px;
-    margin: 20px 0 0 0;
+    margin: 9.375px 2.5vw 0 0;
     border-radius: 10px;
+    
+    &::before{
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: -5vw;
+        width: 1px;
+        height: 100%;
+        background-color: hsl(239, 57%, 85%)
+    }
 `
 const WrapRow = styled.div`
     display: flex;

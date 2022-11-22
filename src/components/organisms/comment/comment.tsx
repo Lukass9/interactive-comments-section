@@ -10,16 +10,11 @@ const Wrapp = styled.section`
     padding: 20px;
     margin: 9.375px 2.5vw 0 0;
     border-radius: 10px;
-    
-    &::before{
-        content: " ";
-        position: absolute;
-        top: 0;
-        left: -5vw;
-        width: 1px;
-        height: 100%;
-        background-color: hsl(239, 57%, 85%)
+
+    :first-child{
+        margin-top: ${(props: {isReply: boolean}) => props.isReply? "0px" : "9.375px"};
     }
+    
 `
 const WrapRow = styled.div`
     display: flex;

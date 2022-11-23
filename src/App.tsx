@@ -1,60 +1,113 @@
-import styled, {} from 'styled-components';
 import Comment from './components/organisms/comment/comment';
 import data from './asserts/data/data.json';
 import AddCommentSection from './components/organisms/addCommentSection/AddCommentSection';
+import { Wrapp, WrappComment, WrappReplyComment } from './App.style';
+import { useEffect, useState } from 'react';
 
-const Wrapp = styled.main `
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  min-height: 100vh;
-  justify-content: center;
-  align-items: center;
-  `
-const WrappComment = styled.section`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: end;
-`
-const WrappReplyComment = styled.div`
-  position: relative;
-  margin-top: 9.375px;
-   &::before{
-        content: " ";
-        position: absolute;
-        top: 0;
-        left: -5vw;
-        width: 1px;
-        height: 100%;
-        background-color: hsl(239, 57%, 85%)
-    }
-` 
+interface reply {
+  id: number,
+  content: string,
+  createdAt: string,
+  score: number,
+  replyingTo: string,
+  user:{
+    userImage: string,
+    userName: string,
+  }
+}
+
+interface commentsState {
+    id: number,
+    content: string,
+    createdAt: string,
+    score: number,
+    user:{
+      userImage: string,
+      userName: string,
+    },
+    replies?: reply[]
+}
+
 const App: React.FC = () => {
+  const initialState: commentsState[] = [{
+    id: 0,
+    content: '',
+    createdAt: '',
+    score: 0,
+    user:{
+      userImage: '',
+      userName: '',
+    }
+  }]
+  const [comments, setComments] = useState(initialState)
+
+  useEffect(()=>{
+    const comments: commentsState[] = []
+    data.comments.map(comment=>{
+      const singleComment: commentsState = {
+        id: comment.id,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        score: comment.score,
+        user: {
+          userImage: comment.user.image.png,
+          userName: comment.user.username
+        },
+        replies: comment.replies.length>0 ?
+          comment.replies.map(reply=>{
+            const singleReply: reply = {
+              id: reply.id,
+              content: reply.content,
+              createdAt: reply.createdAt,
+              replyingTo: reply.replyingTo,
+              score: reply.score,
+              user: {
+                userImage: reply.user.image.png,
+                userName: reply.user.username
+              }
+            }
+            return singleReply
+          }) : undefined
+      } 
+      comments.push(singleComment)
+    })
+    setComments(comments)
+
+    const singleCommentTEST: commentsState = {
+      id: 15,
+      content: "przykładowy komentarz",
+      createdAt: "Przed chwilą",
+      score: 10,
+      user: {
+        userImage: "./images/avatars/image-amyrobson.png",
+        userName: "NewUser"
+      }
+    } 
+    setComments( [...comments, singleCommentTEST] )
+
+  },[])
   return (
     <Wrapp>
       <WrappComment>
-        {data.comments.map(comment=>(
+        {comments.map(comment=>(
           <>
             <Comment  content= {comment.content}
-            username= {comment.user.username}
+            username= {comment.user.userName}
             createdAt= {comment.createdAt}
             score={comment.score} 
-            userImage= {comment.user.image.png} 
+            userImage= {comment.user.userImage} 
             isReply={false}/>
-            {comment.replies.length>0 ? 
+            {comment.replies != undefined ? 
               <WrappReplyComment>
                 {comment.replies.map(repl=>(
                   <Comment  content= {repl.content}
-                  username= {repl.user.username}
+                  username= {repl.user.userName}
                   createdAt= {repl.createdAt}
                   score={repl.score} 
-                  userImage= {repl.user.image.png} 
+                  userImage= {repl.user.userImage} 
                   isReply={true}/>
                 ))}
               </WrappReplyComment> : null}
-            
           </>
         ))}
       </WrappComment>

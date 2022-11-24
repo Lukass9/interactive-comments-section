@@ -3,75 +3,71 @@ import data from './asserts/data/data.json';
 import AddCommentSection from './components/organisms/addCommentSection/AddCommentSection';
 import { Wrapp, WrappComment, WrappReplyComment } from './App.style';
 import { useEffect, useState } from 'react';
-
-interface reply {
-  id: number,
-  content: string,
-  createdAt: string,
-  score: number,
-  replyingTo: string,
-  user:{
-    userImage: string,
-    userName: string,
-  }
-}
-
-interface commentsState {
-    id: number,
-    content: string,
-    createdAt: string,
-    score: number,
-    user:{
-      userImage: string,
-      userName: string,
-    },
-    replies?: reply[]
-}
+import { commentsState, reply, user } from './asserts/interfaces/interfaces';
 
 const App: React.FC = () => {
+  const currentUserInitState: user = {
+    username: '',
+    image: {
+      png:''
+    }
+  }
   const initialState: commentsState[] = [{
     id: 0,
     content: '',
     createdAt: '',
     score: 0,
-    user:{
-      userImage: '',
-      userName: '',
-    }
+    user: currentUserInitState
   }]
-  const [comments, setComments] = useState(initialState)
+  const [comments, setComments] = useState<commentsState[]>(initialState)
+  const [currentUser, setCurrentUser] = useState(currentUserInitState)
 
   useEffect(()=>{
-    const comments: commentsState[] = []
-    data.comments.map(comment=>{
-      const singleComment: commentsState = {
-        id: comment.id,
-        content: comment.content,
-        createdAt: comment.createdAt,
-        score: comment.score,
-        user: {
-          userImage: comment.user.image.png,
-          userName: comment.user.username
-        },
-        replies: comment.replies.length>0 ?
-          comment.replies.map(reply=>{
-            const singleReply: reply = {
-              id: reply.id,
-              content: reply.content,
-              createdAt: reply.createdAt,
-              replyingTo: reply.replyingTo,
-              score: reply.score,
-              user: {
-                userImage: reply.user.image.png,
-                userName: reply.user.username
-              }
-            }
-            return singleReply
-          }) : undefined
+
+    setCurrentUser({
+      username: data.currentUser.username,
+      image: {
+        png: data.currentUser.image.png
       } 
-      comments.push(singleComment)
     })
-    setComments(comments)
+
+    const comments: commentsState[] = []
+
+    if(data.comments.length > 0){
+      data.comments.map((comment : commentsState )=>{
+        const singleComment: commentsState = {
+          id: comment.id,
+          content: comment.content,
+          createdAt: comment.createdAt,
+          score: comment.score,
+          user: {
+            image: { 
+              png: comment.user.image.png
+            },
+            username: comment.user.username
+          },
+          replies: comment.replies !== undefined ?
+            comment.replies.map((reply: reply)=>{
+              const singleReply: reply = {
+                id: reply.id,
+                content: reply.content,
+                createdAt: reply.createdAt,
+                replyingTo: reply.replyingTo,
+                score: reply.score,
+                user: {
+                  image: {
+                    png: reply.user.image.png
+                  },
+                  username: reply.user.username
+                }
+              }
+              return singleReply
+            }) : undefined 
+        } 
+        comments.push(singleComment)
+      }) 
+    }
+    // setComments(comments)
 
     const singleCommentTEST: commentsState = {
       id: 15,
@@ -79,8 +75,10 @@ const App: React.FC = () => {
       createdAt: "Przed chwilą",
       score: 10,
       user: {
-        userImage: "./images/avatars/image-amyrobson.png",
-        userName: "NewUser"
+        username: "NewUser",
+        image:{
+          png: "./images/avatars/image-amyrobson.png"
+        }
       }
     } 
     setComments( [...comments, singleCommentTEST] )
@@ -92,19 +90,19 @@ const App: React.FC = () => {
         {comments.map(comment=>(
           <>
             <Comment  content= {comment.content}
-            username= {comment.user.userName}
+            username= {comment.user.username}
             createdAt= {comment.createdAt}
             score={comment.score} 
-            userImage= {comment.user.userImage} 
+            userImage= {comment.user.image.png} 
             isReply={false}/>
             {comment.replies != undefined ? 
               <WrappReplyComment>
                 {comment.replies.map(repl=>(
                   <Comment  content= {repl.content}
-                  username= {repl.user.userName}
+                  username= {repl.user.username}
                   createdAt= {repl.createdAt}
                   score={repl.score} 
-                  userImage= {repl.user.userImage} 
+                  userImage= {repl.user.image.png} 
                   isReply={true}/>
                 ))}
               </WrappReplyComment> : null}
@@ -112,7 +110,7 @@ const App: React.FC = () => {
         ))}
       </WrappComment>
       <WrappComment>
-        <AddCommentSection userImage={data.currentUser.image.png}/>
+        <AddCommentSection userImage={currentUser.image.png}/>
       </WrappComment>
     </Wrapp>
   );

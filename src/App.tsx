@@ -28,8 +28,7 @@ const App: React.FC = () => {
   const handleSetSingleComment = (comment: BaseSyntheticEvent) =>{
     setSingleComment(comment.target.value)
   }
-  
-  const handleAddComment = (e:BaseSyntheticEvent) =>{ 
+  const handleAddComment = (e: BaseSyntheticEvent) =>{ 
     e.preventDefault()
     const singleCommentTEST: commentsState = {
       id: comments[comments.length-1].id + 1,
@@ -47,7 +46,13 @@ const App: React.FC = () => {
     setSingleComment('')
   }
   
- 
+  const handleChangeScore = (event: BaseSyntheticEvent ,id: number) =>{
+    console.log(event.target.firstChild.data)
+    console.log(id)
+    const index = comments.findIndex(el=> el.id === id)
+    console.log("index", index)
+  }
+
   useEffect(()=>{
     setCurrentUser({
       username: data.currentUser.username,
@@ -70,21 +75,27 @@ const App: React.FC = () => {
       <WrappComment>
         {comments.map(comment=>(
           <>
-            <Comment  content= {comment.content}
-            username= {comment.user.username}
-            createdAt= {comment.createdAt}
-            score={comment.score} 
-            userImage= {comment.user.image.png} 
-            isReply={false}/>
+            <Comment
+              id={comment.id}
+              handleChangeScore = {handleChangeScore}
+              content= {comment.content}
+              username= {comment.user.username}
+              createdAt= {comment.createdAt}
+              score={comment.score} 
+              userImage= {comment.user.image.png} 
+              isReply={false}/>
             {comment.replies !== undefined ? 
               <WrappReplyComment>
                 {comment.replies.map(repl=>(
-                  <Comment  content= {repl.content}
-                  username= {repl.user.username}
-                  createdAt= {repl.createdAt}
-                  score={repl.score} 
-                  userImage= {repl.user.image.png} 
-                  isReply={true}/>
+                  <Comment  
+                    id={comment.id}
+                    handleChangeScore = {handleChangeScore}
+                    content= {repl.content}
+                    username= {repl.user.username}
+                    createdAt= {repl.createdAt}
+                    score={repl.score} 
+                    userImage= {repl.user.image.png} 
+                    isReply={true}/>
                 ))}
               </WrappReplyComment> : null}
           </>

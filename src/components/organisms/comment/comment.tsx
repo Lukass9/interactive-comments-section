@@ -1,4 +1,4 @@
-import React from "react";
+import React, { BaseSyntheticEvent } from "react";
 import styled from "styled-components"
 
 const Wrapp = styled.section`
@@ -80,14 +80,16 @@ const Reply = styled.div`
 
 interface comments {
     username: string,
+    id: number,
     content: string, 
     createdAt: string,
     score: number,
     userImage: string,
     isReply: boolean
+    handleChangeScore: (event: BaseSyntheticEvent, id: number) => void
 }
 
-const Comment: React.FC <comments> = ({username,content,createdAt,score,userImage, isReply}) =>{
+const Comment: React.FC <comments> = ({username,content,createdAt,score,userImage, isReply, handleChangeScore, id}) =>{
     return (
         <Wrapp isReply={isReply}>
             <WrapRow> 
@@ -100,11 +102,9 @@ const Comment: React.FC <comments> = ({username,content,createdAt,score,userImag
             </Content>
             <WrapRowButton>
                 <ScoreWrapp bg={"#f5f6fa"}>
-                    {/* <EditScore src="\images\icon-plus.svg" alt="plus"/> */}
-                    <EditScore> + </EditScore>
+                    <EditScore onClick={(event: BaseSyntheticEvent)=> handleChangeScore(event ,id)}> + </EditScore>
                     <Score> {score} </Score>
-                    <EditScore> - </EditScore>
-                    {/* <EditScore src="\images\icon-minus.svg" alt="minus"/> */}
+                    <EditScore onClick={(event: BaseSyntheticEvent)=> handleChangeScore(event ,id)}> - </EditScore>
                 </ScoreWrapp>
                 <WrapButton bg={"#fff"}>
                     <img src="\images\icon-reply.svg" alt="reply"/>

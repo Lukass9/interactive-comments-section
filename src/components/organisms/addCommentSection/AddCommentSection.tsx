@@ -1,4 +1,4 @@
-import React from "react";
+import React, { BaseSyntheticEvent } from "react";
 import styled from "styled-components"
 
 const Wrapp = styled.form`
@@ -41,12 +41,15 @@ const Button = styled.button`
 `
 interface commentSection {
     userImage: string,
+    singleComment: string,
+    handleSetSingleComment: (comment: BaseSyntheticEvent)=>void
+    handleAddComment: (e: BaseSyntheticEvent)=>void
 }
-const AddCommentSection: React.FC<commentSection> = ({userImage}) =>{
+const AddCommentSection: React.FC<commentSection> = ({userImage, singleComment, handleSetSingleComment, handleAddComment}) =>{
     return (
-        <Wrapp>
+        <Wrapp onSubmit={handleAddComment}>
             <Avatar src={userImage} alt="userAvatar"/>
-            <Comment type="textarea" placeholder="Add a comment..."/>
+            <Comment onChange={handleSetSingleComment} value={singleComment} type="textarea" placeholder="Add a comment..."/>
             <Button> SEND </Button>
         </Wrapp>
     )

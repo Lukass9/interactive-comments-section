@@ -3,23 +3,10 @@ import data from './asserts/data/data.json';
 import AddCommentSection from './components/organisms/addCommentSection/AddCommentSection';
 import { Wrapp, WrappComment, WrappReplyComment } from './App.style';
 import { BaseSyntheticEvent, useEffect, useState } from 'react';
-import { commentsState, user } from './asserts/interfaces/interfaces';
+import { commentsState, reply, user } from './asserts/interfaces/interfaces';
+import { currentUserInitState, initialState } from './asserts/helpers/function/initialState/InitialState';
 
 const App: React.FC = () => {
-  
-  const currentUserInitState: user = {
-    username: '',
-    image: {
-      png:''
-    }
-  }
-  const initialState: commentsState[] = [{
-    id: 0,
-    content: '',
-    createdAt: '',
-    score: 0,
-    user: currentUserInitState
-  }]
 
   const [comments, setComments] = useState<commentsState[]>(initialState)
   const [singleComment, setSingleComment] = useState('')
@@ -45,12 +32,29 @@ const App: React.FC = () => {
     setComments( [...comments, singleCommentTEST] )
     setSingleComment('')
   }
-  
   const handleChangeScore = (event: BaseSyntheticEvent ,id: number) =>{
-    console.log(event.target.firstChild.data)
-    console.log(id)
     const index = comments.findIndex(el=> el.id === id)
-    console.log("index", index)
+    let repliesIndex: number[] | undefined;
+    comments.map((el,i) =>{
+      el.replies?.findIndex((find, j)=> {
+        if(find.id === id) repliesIndex = [i,j]
+      })
+    })
+
+    const changeScore = (replies: reply | commentsState | undefined)=>{
+      if(replies!==undefined) {
+        if(event.target.firstChild.data === " - ")  {
+          if(replies.score > 0) replies.score--
+        }
+        else replies.score++
+      }
+    }
+
+    if(repliesIndex !== undefined ){
+      changeScore(comments[repliesIndex[0]].replies?.at(repliesIndex[1]))
+    }
+    else changeScore(comments[index])
+    setComments([...comments])
   }
 
   useEffect(()=>{
@@ -71,11 +75,12 @@ const App: React.FC = () => {
   },[] )
 
   return (
-    <Wrapp>
+    <Wrapp >
       <WrappComment>
         {comments.map(comment=>(
           <>
             <Comment
+              key={`key + ${comment.id}`}
               id={comment.id}
               handleChangeScore = {handleChangeScore}
               content= {comment.content}
@@ -87,8 +92,9 @@ const App: React.FC = () => {
             {comment.replies !== undefined ? 
               <WrappReplyComment>
                 {comment.replies.map(repl=>(
-                  <Comment  
-                    id={comment.id}
+                  <Comment
+                    key={`keyReplies + ${repl.id}`}  
+                    id={repl.id}
                     handleChangeScore = {handleChangeScore}
                     content= {repl.content}
                     username= {repl.user.username}

@@ -86,12 +86,13 @@ interface comments {
     score: number,
     userImage: string,
     isReply: boolean
-    handleChangeScore: (event: BaseSyntheticEvent, id: number) => void
+    handleChangeScore: (event: BaseSyntheticEvent, id: number) => void,
+    key: React.Key
 }
 
-const Comment: React.FC <comments> = ({username,content,createdAt,score,userImage, isReply, handleChangeScore, id}) =>{
+const Comment: React.FC <comments> = ({username,content,createdAt,score,userImage, isReply, handleChangeScore, id, key}) =>{
     return (
-        <Wrapp isReply={isReply}>
+        <Wrapp key={id} isReply={isReply}>
             <WrapRow> 
                 <Avatar src={userImage} alt="avatar" />
                 <UserName> {username} </UserName>

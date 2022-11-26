@@ -1,24 +1,41 @@
-export interface user {
+import { BaseSyntheticEvent } from "react"
+
+export interface User {
   username: string,
   image: {
     png: string,
   }
 }
 
-export interface reply {
+export interface Reply {
   id: number,
   content: string,
   createdAt: string,
   score: number,
   replyingTo: string,
-  user: user
+  user: User,
+  isCurrentlyUser?: boolean,
 }
 
-export interface commentsState {
+export interface CommentsState {
     id: number,
     content: string,
     createdAt: string,
     score: number,
-    user: user,
-    replies?:  reply[]
+    user: User,
+    replies?:  Reply[],
+    isCurrentlyUser?: boolean,
+}
+
+export interface Comments {
+  username: string,
+  id: number,
+  content: string, 
+  createdAt: string,
+  score: number,
+  userImage: string,
+  isReply: boolean,
+  isCurrentlyUser?: boolean,
+  handleChangeScore: (event: BaseSyntheticEvent, id: number) => void,
+  key: React.Key
 }

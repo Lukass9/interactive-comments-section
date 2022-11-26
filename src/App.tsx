@@ -3,12 +3,12 @@ import data from './asserts/data/data.json';
 import AddCommentSection from './components/organisms/addCommentSection/AddCommentSection';
 import { Wrapp, WrappComment, WrappReplyComment } from './App.style';
 import { BaseSyntheticEvent, useEffect, useState } from 'react';
-import { commentsState, reply, user } from './asserts/interfaces/interfaces';
+import { CommentsState, Reply, User } from './asserts/interfaces/interfaces';
 import { currentUserInitState, initialState } from './asserts/helpers/function/initialState/InitialState';
 
 const App: React.FC = () => {
 
-  const [comments, setComments] = useState<commentsState[]>(initialState)
+  const [comments, setComments] = useState<CommentsState[]>(initialState)
   const [singleComment, setSingleComment] = useState('')
   const [currentUser, setCurrentUser] = useState(currentUserInitState)
 
@@ -17,10 +17,11 @@ const App: React.FC = () => {
   }
   const handleAddComment = (e: BaseSyntheticEvent) =>{ 
     e.preventDefault()
-    const singleCommentTEST: commentsState = {
+    const singleCommentTEST: CommentsState = {
       id: comments[comments.length-1].id + 1,
       content: singleComment,
       createdAt: "Przed chwilą",
+      isCurrentlyUser: true,
       score: 0,
       user: {
         username: currentUser.username,
@@ -41,7 +42,7 @@ const App: React.FC = () => {
       })
     })
 
-    const changeScore = (replies: reply | commentsState | undefined)=>{
+    const changeScore = (replies: Reply | CommentsState | undefined)=>{
       if(replies!==undefined) {
         if(event.target.firstChild.data === " - ")  {
           if(replies.score > 0) replies.score--
@@ -56,6 +57,15 @@ const App: React.FC = () => {
     else changeScore(comments[index])
     setComments([...comments])
   }
+  const CheckCommentForCurrentUser = (checkComment: CommentsState[]) =>{
+    checkComment.map(el=>{
+      el.replies?.map(elReplies =>{
+        if(elReplies.user.username === currentUser.username) elReplies.isCurrentlyUser = true
+      })
+      if(el.user.username === currentUser.username) el.isCurrentlyUser = true
+    })
+    return checkComment
+  }
 
   useEffect(()=>{
     setCurrentUser({
@@ -64,15 +74,19 @@ const App: React.FC = () => {
         png: data.currentUser.image.png
       }
     })
-    const savedCommentsStates: commentsState[] = []
 
-    data.comments.map((comment : commentsState )=>{
-      const singleComment: commentsState = comment
-      savedCommentsStates.push(singleComment)
-    }) 
-    setComments(savedCommentsStates)
-    
   },[] )
+
+  useEffect(()=>{
+
+    const savedCommentsStates: CommentsState[] = []
+    data.comments.map((comment : CommentsState )=>{
+      const singleComment: CommentsState = comment
+      savedCommentsStates.push(singleComment)
+    })
+    setComments(CheckCommentForCurrentUser(savedCommentsStates))
+  },[currentUser])
+
 
   return (
     <Wrapp >
@@ -87,8 +101,10 @@ const App: React.FC = () => {
               username= {comment.user.username}
               createdAt= {comment.createdAt}
               score={comment.score} 
-              userImage= {comment.user.image.png} 
+              userImage= {comment.user.image.png}
+              isCurrentlyUser={comment.isCurrentlyUser} 
               isReply={false}/>
+              
             {comment.replies !== undefined ? 
               <WrappReplyComment>
                 {comment.replies.map(repl=>(
@@ -101,6 +117,7 @@ const App: React.FC = () => {
                     createdAt= {repl.createdAt}
                     score={repl.score} 
                     userImage= {repl.user.image.png} 
+                    isCurrentlyUser={repl.isCurrentlyUser}
                     isReply={true}/>
                 ))}
               </WrappReplyComment> : null}

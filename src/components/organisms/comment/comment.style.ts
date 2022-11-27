@@ -47,12 +47,10 @@ export const Content = styled.p`
 export const ScoreWrapp = styled.div`
     display: flex;
     align-items: center;
-    background-color: ${(props: { bg: string; }) => props.bg};
+    background-color: #f5f6fa;
     border-radius: 10px;
 `
-export const WrapButton = styled(ScoreWrapp)`
-    cursor: pointer;
-`
+
 export const EditScore = styled.p`
     padding: 0 15px;
     font-size: 20px;
@@ -71,8 +69,11 @@ export const Score = styled.div`
     font-weight: 700;
     min-width: 18px;
 `
-export const Reply = styled.div` 
-    color: #5457b6;
-    padding: 5px;
-    font-weight: 700;
+export const User = styled.p`
+    padding: 2px 10px;
+    background-color: #5457b6;
+    color: white;
+    border-radius: 2px;
+    font-size: 14px;
+    margin: 0 5px;
 `

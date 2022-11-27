@@ -1,6 +1,7 @@
 import React, { BaseSyntheticEvent } from "react";
 import { Comments } from "../../../asserts/interfaces/interfaces";
-import { Avatar, Content, CreatedAt, EditScore, Reply, Score, ScoreWrapp, UserName, WrapButton, Wrapp, WrapRow, WrapRowButton } from "./comment.style";
+import Button from "../../atoms/Button/Button";
+import { Avatar, Content, CreatedAt, EditScore,  Score, ScoreWrapp, User, UserName,  Wrapp, WrapRow, WrapRowButton } from "./comment.style";
 
 const Comment: React.FC <Comments> = ({username,content,createdAt,score,userImage, isReply, isCurrentlyUser , handleChangeScore, id, key}) =>{
     return (
@@ -8,22 +9,28 @@ const Comment: React.FC <Comments> = ({username,content,createdAt,score,userImag
             <WrapRow> 
                 <Avatar src={userImage} alt="avatar" />
                 <UserName> {username} </UserName>
-                {isCurrentlyUser? <p>you</p> : null}
+                {isCurrentlyUser? <User>you</User> : null}
                 <CreatedAt> {createdAt} </CreatedAt>
             </WrapRow>
             <Content>
                 {content}
             </Content>
             <WrapRowButton>
-                <ScoreWrapp bg={"#f5f6fa"}>
+                <ScoreWrapp>
                     <EditScore onClick={(event: BaseSyntheticEvent)=> handleChangeScore(event ,id)}> + </EditScore>
                     <Score> {score} </Score>
                     <EditScore onClick={(event: BaseSyntheticEvent)=> handleChangeScore(event ,id)}> - </EditScore>
                 </ScoreWrapp>
-                <WrapButton bg={"#fff"}>
-                    <img src="\images\icon-reply.svg" alt="reply"/>
-                    <Reply>Reply</Reply>
-                </WrapButton>
+                
+                {isCurrentlyUser? 
+                <WrapRowButton>
+                    <Button text="Delete" isDelete img="\images\icon-delete.svg"/>
+                    <Button text="Edit" img="\images\icon-edit.svg"/>
+                </WrapRowButton>
+                :
+                    <Button text="Reply" img="\images\icon-reply.svg"/>
+                }
+                
             </WrapRowButton>
         </Wrapp>
     )

@@ -95,30 +95,31 @@ const App: React.FC = () => {
           <>
             <Comment
               key={`key + ${comment.id}`}
-              id={comment.id}
               handleChangeScore = {handleChangeScore}
+              id={comment.id}
               content= {comment.content}
               username= {comment.user.username}
               createdAt= {comment.createdAt}
               score={comment.score} 
               userImage= {comment.user.image.png}
-              isCurrentlyUser={comment.isCurrentlyUser} 
+              isCurrentlyUser={comment.isCurrentlyUser}
               isReply={false}/>
               
-            {comment.replies !== undefined ? 
+            {comment.replies !== undefined && comment.replies.length > 0 ? 
               <WrappReplyComment>
                 {comment.replies.map(repl=>(
                   <Comment
-                    key={`keyReplies + ${repl.id}`}  
-                    id={repl.id}
-                    handleChangeScore = {handleChangeScore}
-                    content= {repl.content}
-                    username= {repl.user.username}
-                    createdAt= {repl.createdAt}
-                    score={repl.score} 
-                    userImage= {repl.user.image.png} 
-                    isCurrentlyUser={repl.isCurrentlyUser}
-                    isReply={true}/>
+                  id={repl.id}
+                  content= {repl.content}
+                  username= {repl.user.username}
+                  createdAt= {repl.createdAt}
+                  score={repl.score} 
+                  userImage= {repl.user.image.png} 
+                  isCurrentlyUser={repl.isCurrentlyUser}
+                  replyingTo={repl.replyingTo}
+                  key={`keyReplies + ${repl.id}`}  
+                  handleChangeScore = {handleChangeScore}
+                  isReply={true}/>
                 ))}
               </WrappReplyComment> : null}
           </>

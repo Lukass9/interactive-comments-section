@@ -37,5 +37,6 @@ export interface Comments {
   isReply: boolean,
   isCurrentlyUser?: boolean,
   handleChangeScore: (event: BaseSyntheticEvent, id: number) => void,
-  key: React.Key
+  key: React.Key,
+  replyingTo?: string
 }

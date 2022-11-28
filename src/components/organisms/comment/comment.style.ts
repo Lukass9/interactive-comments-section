@@ -43,7 +43,13 @@ export const Content = styled.p`
     line-height: 23px;
     letter-spacing: .5px;
 `
-
+export const ReplyingTo = styled.p`
+    display: inline;
+    color: #5457b6;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+`
 export const ScoreWrapp = styled.div`
     display: flex;
     align-items: center;

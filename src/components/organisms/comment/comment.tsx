@@ -1,9 +1,9 @@
 import React, { BaseSyntheticEvent } from "react";
 import { Comments } from "../../../asserts/interfaces/interfaces";
 import Button from "../../atoms/Button/Button";
-import { Avatar, Content, CreatedAt, EditScore,  Score, ScoreWrapp, User, UserName,  Wrapp, WrapRow, WrapRowButton } from "./comment.style";
+import { Avatar, Content, CreatedAt, EditScore,  ReplyingTo,  Score, ScoreWrapp, User, UserName,  Wrapp, WrapRow, WrapRowButton } from "./comment.style";
 
-const Comment: React.FC <Comments> = ({username,content,createdAt,score,userImage, isReply, isCurrentlyUser , handleChangeScore, id, key}) =>{
+const Comment: React.FC <Comments> = ({username,replyingTo , content,createdAt,score,userImage, isReply, isCurrentlyUser , handleChangeScore, id, key}) =>{
     return (
         <Wrapp key={key} isReply={isReply}>
             <WrapRow> 
@@ -13,6 +13,7 @@ const Comment: React.FC <Comments> = ({username,content,createdAt,score,userImag
                 <CreatedAt> {createdAt} </CreatedAt>
             </WrapRow>
             <Content>
+                {isReply? <ReplyingTo> @{replyingTo} </ReplyingTo> : null}
                 {content}
             </Content>
             <WrapRowButton>
@@ -23,10 +24,10 @@ const Comment: React.FC <Comments> = ({username,content,createdAt,score,userImag
                 </ScoreWrapp>
                 
                 {isCurrentlyUser? 
-                <WrapRowButton>
-                    <Button text="Delete" isDelete img="\images\icon-delete.svg"/>
-                    <Button text="Edit" img="\images\icon-edit.svg"/>
-                </WrapRowButton>
+                    <WrapRowButton>
+                        <Button text="Delete" isDelete img="\images\icon-delete.svg"/>
+                        <Button text="Edit" img="\images\icon-edit.svg"/>
+                    </WrapRowButton>
                 :
                     <Button text="Reply" img="\images\icon-reply.svg"/>
                 }

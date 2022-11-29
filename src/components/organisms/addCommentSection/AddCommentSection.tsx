@@ -6,7 +6,6 @@ const Wrapp = styled.form`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    /* flex-direction: column; */
     width: ${(props: {isReply: boolean})=> props.isReply? '90vw' : '95vw' };
     background-color: #ffffff;
     padding: 20px;
@@ -16,7 +15,6 @@ const Wrapp = styled.form`
 const Avatar = styled.img`
     width: 30px;
     height: 30px;
-    /* margin: 0 5px; */
 `
 const Comment = styled.textarea`
     font-family: 'Rubik', sans-serif;
@@ -42,12 +40,15 @@ const Button = styled.button`
 interface commentSection {
     userImage: string,
     singleComment: string,
-    handleSetSingleComment: (comment: BaseSyntheticEvent)=>void
-    handleAddComment: (e: BaseSyntheticEvent)=>void
+    handleSetSingleComment: (comment: BaseSyntheticEvent)=>void,
+    handleAddComment: (e: BaseSyntheticEvent)=>void,
+    isReply?: boolean
 }
-const AddCommentSection: React.FC<commentSection> = ({userImage, singleComment, handleSetSingleComment, handleAddComment}) =>{
+const AddCommentSection: React.FC<commentSection> = ({userImage, singleComment, handleSetSingleComment, handleAddComment, isReply}) =>{
     return (
-        <Wrapp onSubmit={handleAddComment}>
+        <Wrapp 
+            isReply={isReply}
+            onSubmit={handleAddComment}>
             <Avatar src={userImage} alt="userAvatar"/>
             <Comment onChange={handleSetSingleComment} value={singleComment} type="textarea" placeholder="Add a comment..."/>
             <Button> SEND </Button>

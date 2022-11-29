@@ -1,4 +1,4 @@
-import { CommentsState, User } from "../../../interfaces/interfaces"
+import { CommentsStruct, User } from "../../interfaces/interfaces"
 
 export const currentUserInitState: User = {
     username: '',
@@ -6,7 +6,7 @@ export const currentUserInitState: User = {
       png:''
     }
   }
-export const initialState: CommentsState[] = [{
+export const initialState: CommentsStruct[] = [{
   id: 0,
   content: '',
   createdAt: '',

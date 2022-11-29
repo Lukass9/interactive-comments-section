@@ -3,12 +3,13 @@ import data from './asserts/data/data.json';
 import AddCommentSection from './components/organisms/addCommentSection/AddCommentSection';
 import { Wrapp, WrappComment, WrappReplyComment } from './App.style';
 import { BaseSyntheticEvent, useEffect, useState } from 'react';
-import { CommentsState, Reply, User } from './asserts/interfaces/interfaces';
-import { currentUserInitState, initialState } from './asserts/helpers/function/initialState/InitialState';
+import { CommentsStruct, Reply } from './asserts/interfaces/interfaces';
+import { currentUserInitState, initialState } from './asserts/helpers/initialState/InitialState';
+import { findIndex } from './asserts/helpers/function/findIndex';
 
 const App: React.FC = () => {
 
-  const [comments, setComments] = useState<CommentsState[]>(initialState)
+  const [comments, setComments] = useState<CommentsStruct[]>(initialState)
   const [singleComment, setSingleComment] = useState('')
   const [currentUser, setCurrentUser] = useState(currentUserInitState)
 
@@ -17,7 +18,7 @@ const App: React.FC = () => {
   }
   const handleAddComment = (e: BaseSyntheticEvent) =>{ 
     e.preventDefault()
-    const singleCommentTEST: CommentsState = {
+    const singleCommentTEST: CommentsStruct = {
       id: comments[comments.length-1].id + 1,
       content: singleComment,
       createdAt: "Przed chwilą",
@@ -34,15 +35,9 @@ const App: React.FC = () => {
     setSingleComment('')
   }
   const handleChangeScore = (event: BaseSyntheticEvent ,id: number) =>{
-    const index = comments.findIndex(el=> el.id === id)
-    let repliesIndex: number[] | undefined;
-    comments.map((el,i) =>{
-      el.replies?.findIndex((find, j)=> {
-        if(find.id === id) repliesIndex = [i,j]
-      })
-    })
+    const index = findIndex(comments, id)
 
-    const changeScore = (replies: Reply | CommentsState | undefined)=>{
+    const changeScore = (replies: Reply | CommentsStruct | undefined)=>{
       if(replies!==undefined) {
         if(event.target.firstChild.data === " - ")  {
           if(replies.score > 0) replies.score--
@@ -51,13 +46,18 @@ const App: React.FC = () => {
       }
     }
 
-    if(repliesIndex !== undefined ){
-      changeScore(comments[repliesIndex[0]].replies?.at(repliesIndex[1]))
+    if(index !== undefined && typeof index !== "number"){
+      changeScore(comments[index[0]].replies?.at(index[1]))
     }
     else changeScore(comments[index])
     setComments([...comments])
   }
-  const CheckCommentForCurrentUser = (checkComment: CommentsState[]) =>{
+  const handleReplying = (id: number) =>{
+    console.log("id", id)
+    console.log("findIndex", findIndex(comments, id))
+    console.log("typeof", typeof findIndex(comments, id))
+  }
+  const CheckCommentForCurrentUser = (checkComment: CommentsStruct[]) =>{
     checkComment.map(el=>{
       el.replies?.map(elReplies =>{
         if(elReplies.user.username === currentUser.username) elReplies.isCurrentlyUser = true
@@ -79,9 +79,9 @@ const App: React.FC = () => {
 
   useEffect(()=>{
 
-    const savedCommentsStates: CommentsState[] = []
-    data.comments.map((comment : CommentsState )=>{
-      const singleComment: CommentsState = comment
+    const savedCommentsStates: CommentsStruct[] = []
+    data.comments.map((comment : CommentsStruct )=>{
+      const singleComment: CommentsStruct = comment
       savedCommentsStates.push(singleComment)
     })
     setComments(CheckCommentForCurrentUser(savedCommentsStates))
@@ -94,30 +94,31 @@ const App: React.FC = () => {
         {comments.map(comment=>(
           <>
             <Comment
-              key={`key + ${comment.id}`}
-              handleChangeScore = {handleChangeScore}
               id={comment.id}
               content= {comment.content}
-              username= {comment.user.username}
+              user={comment.user}
               createdAt= {comment.createdAt}
               score={comment.score} 
-              userImage= {comment.user.image.png}
               isCurrentlyUser={comment.isCurrentlyUser}
-              isReply={false}/>
-              
+              key={`key + ${comment.id}`}
+              handleChangeScore = {handleChangeScore}
+              handleReplying={handleReplying}
+              isReply={false}
+              isWriteComment={comment.isWriteComment}
+              />
             {comment.replies !== undefined && comment.replies.length > 0 ? 
               <WrappReplyComment>
                 {comment.replies.map(repl=>(
                   <Comment
                   id={repl.id}
                   content= {repl.content}
-                  username= {repl.user.username}
                   createdAt= {repl.createdAt}
-                  score={repl.score} 
-                  userImage= {repl.user.image.png} 
+                  score={repl.score}
+                  user={repl.user}
                   isCurrentlyUser={repl.isCurrentlyUser}
                   replyingTo={repl.replyingTo}
                   key={`keyReplies + ${repl.id}`}  
+                  handleReplying={handleReplying}
                   handleChangeScore = {handleChangeScore}
                   isReply={true}/>
                 ))}

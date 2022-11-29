@@ -7,36 +7,28 @@ export interface User {
   }
 }
 
-export interface Reply {
+export interface BasicCommentStruct{
   id: number,
   content: string,
   createdAt: string,
   score: number,
-  replyingTo: string,
   user: User,
+}
+
+export interface Reply extends BasicCommentStruct{
+  replyingTo?: string,
   isCurrentlyUser?: boolean,
 }
 
-export interface CommentsState {
-    id: number,
-    content: string,
-    createdAt: string,
-    score: number,
-    user: User,
+export interface CommentsStruct extends BasicCommentStruct{
     replies?:  Reply[],
     isCurrentlyUser?: boolean,
+    isWriteComment?: boolean,
 }
 
-export interface Comments {
-  username: string,
-  id: number,
-  content: string, 
-  createdAt: string,
-  score: number,
-  userImage: string,
+export interface Comments extends Reply, CommentsStruct{
   isReply: boolean,
-  isCurrentlyUser?: boolean,
   handleChangeScore: (event: BaseSyntheticEvent, id: number) => void,
+  handleReplying: (id: number) => void, 
   key: React.Key,
-  replyingTo?: string
 }

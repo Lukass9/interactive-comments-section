@@ -1,39 +1,53 @@
-import React, { BaseSyntheticEvent } from "react";
+import React, { BaseSyntheticEvent, Component } from "react";
+import { WrappComment } from "../../../App.style";
 import { Comments } from "../../../asserts/interfaces/interfaces";
 import Button from "../../atoms/Button/Button";
-import { Avatar, Content, CreatedAt, EditScore,  ReplyingTo,  Score, ScoreWrapp, User, UserName,  Wrapp, WrapRow, WrapRowButton } from "./comment.style";
+import AddCommentSection from "../addCommentSection/AddCommentSection";
+import { Avatar, Content, CreatedAt, EditScore, ReplyingTo, Score, ScoreWrapp, User, UserName, Wrapp, WrapRow, WrapRowButton } from "./comment.style";
 
-const Comment: React.FC <Comments> = ({username,replyingTo , content,createdAt,score,userImage, isReply, isCurrentlyUser , handleChangeScore, id, key}) =>{
+const Comment: React.FC<Comments> = ({ user: { username, image: { png } }, replyingTo, content, createdAt, score, isReply, isCurrentlyUser, handleChangeScore, handleReplying, id, key }) => {
     return (
         <Wrapp key={key} isReply={isReply}>
-            <WrapRow> 
-                <Avatar src={userImage} alt="avatar" />
+            <WrapRow>
+                <Avatar src={png} alt="avatar" />
                 <UserName> {username} </UserName>
-                {isCurrentlyUser? <User>you</User> : null}
+                {isCurrentlyUser ? <User>you</User> : null}
                 <CreatedAt> {createdAt} </CreatedAt>
             </WrapRow>
             <Content>
-                {isReply? <ReplyingTo> @{replyingTo} </ReplyingTo> : null}
+                {isReply ? <ReplyingTo> @{replyingTo} </ReplyingTo> : null}
                 {content}
             </Content>
             <WrapRowButton>
                 <ScoreWrapp>
-                    <EditScore onClick={(event: BaseSyntheticEvent)=> handleChangeScore(event ,id)}> + </EditScore>
+                    <EditScore onClick={(event: BaseSyntheticEvent) => handleChangeScore(event, id)}> + </EditScore>
                     <Score> {score} </Score>
-                    <EditScore onClick={(event: BaseSyntheticEvent)=> handleChangeScore(event ,id)}> - </EditScore>
+                    <EditScore onClick={(event: BaseSyntheticEvent) => handleChangeScore(event, id)}> - </EditScore>
                 </ScoreWrapp>
-                
-                {isCurrentlyUser? 
+                {isCurrentlyUser ?
                     <WrapRowButton>
-                        <Button text="Delete" isDelete img="\images\icon-delete.svg"/>
-                        <Button text="Edit" img="\images\icon-edit.svg"/>
+                        <Button
+                            handleReplying={handleReplying}
+                            id={id}
+                            text="Delete"
+                            isDelete
+                            img="\images\icon-delete.svg" />
+                        <Button
+                            handleReplying={handleReplying}
+                            id={id}
+                            text="Edit"
+                            img="\images\icon-edit.svg" />
                     </WrapRowButton>
-                :
-                    <Button text="Reply" img="\images\icon-reply.svg"/>
+                    :
+                    <Button
+                        handleReplying={handleReplying}
+                        id={id}
+                        text="Reply"
+                        img="\images\icon-reply.svg" />
                 }
-                
             </WrapRowButton>
         </Wrapp>
+
     )
 }
 

@@ -13,7 +13,6 @@ export const Wrapp = styled.section`
     :first-child{
         margin-top: ${(props: {isReply: boolean}) => props.isReply? "0px" : "9.375px"};
     }
-    
 `
 export const WrapRow = styled.div`
     display: flex;

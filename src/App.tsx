@@ -3,37 +3,21 @@ import data from './asserts/data/data.json';
 import AddCommentSection from './components/organisms/addCommentSection/AddCommentSection';
 import { Wrapp, WrappComment, WrappReplyComment } from './App.style';
 import { BaseSyntheticEvent, useEffect, useState } from 'react';
-import { CommentsStruct, Reply } from './asserts/interfaces/interfaces';
+import { CommentsStruct, Reply, User } from './asserts/interfaces/interfaces';
 import { currentUserInitState, initialState } from './asserts/helpers/initialState/InitialState';
 import { findIndex } from './asserts/helpers/function/findIndex';
+import { useComment } from './asserts/helpers/hooks/useHooks';
+
 
 const App: React.FC = () => {
-
   const [comments, setComments] = useState<CommentsStruct[]>(initialState)
-  const [singleComment, setSingleComment] = useState('')
   const [currentUser, setCurrentUser] = useState(currentUserInitState)
+  
+  const handleSetComments = (changeComments: CommentsStruct[]) =>{
+    setComments(changeComments)
+  }
+  const {singleComment, handleSetSingleComment, handleAddComment} = useComment(comments,currentUser,handleSetComments)
 
-  const handleSetSingleComment = (comment: BaseSyntheticEvent) =>{
-    setSingleComment(comment.target.value)
-  }
-  const handleAddComment = (e: BaseSyntheticEvent) =>{ 
-    e.preventDefault()
-    const singleCommentTEST: CommentsStruct = {
-      id: comments[comments.length-1].id + 1,
-      content: singleComment,
-      createdAt: "Przed chwilą",
-      isCurrentlyUser: true,
-      score: 0,
-      user: {
-        username: currentUser.username,
-        image:{
-          png: currentUser.image.png
-        }
-      }
-    }
-    setComments( [...comments, singleCommentTEST] )
-    setSingleComment('')
-  }
   const handleChangeScore = (event: BaseSyntheticEvent ,id: number) =>{
     const index = findIndex(comments, id)
 

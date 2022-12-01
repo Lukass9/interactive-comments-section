@@ -1,12 +1,7 @@
-import React, { BaseSyntheticEvent, Component } from "react";
-import { WrappComment } from "../../../App.style";
+import React, { BaseSyntheticEvent } from "react";
 import { CommentsStruct, Reply } from "../../../asserts/interfaces/interfaces";
-import { Avatar } from "../../atoms/Button/avatar/Avatar";
-import Button from "../../atoms/Button/Button";
 import { CommentAuthor } from "../../molecules/commentAuthor/commentAuthor";
 import { CommentButton } from "../../molecules/commentButton/commentButton";
-import { ScoreWrapp } from "../../molecules/scoreWrapp/ScoreWrapp";
-import AddCommentSection from "../addCommentSection/AddCommentSection";
 import { Content, ReplyingTo, Wrapp } from "./comment.style";
 
 interface Props extends Reply, CommentsStruct{

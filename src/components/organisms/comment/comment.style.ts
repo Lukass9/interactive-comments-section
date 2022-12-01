@@ -23,12 +23,6 @@ export const WrapRowButton = styled.div`
     align-items: center;
     justify-content: space-between;
 `
-
-export const Avatar = styled.img`
-    width: 30px;
-    height: 30px;
-    margin: 0 5px;
-`
 export const UserName = styled.h1`
     font-size: 16px;
     margin: 0 5px;

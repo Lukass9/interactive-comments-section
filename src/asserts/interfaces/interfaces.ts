@@ -25,10 +25,3 @@ export interface CommentsStruct extends BasicCommentStruct{
     isCurrentlyUser?: boolean,
     isWriteComment?: boolean,
 }
-
-export interface Comments extends Reply, CommentsStruct{
-  isReply: boolean,
-  handleChangeScore: (event: BaseSyntheticEvent, id: number) => void,
-  handleReplying: (id: number) => void, 
-  key: React.Key,
-}

@@ -1,51 +1,30 @@
 import React, { BaseSyntheticEvent, Component } from "react";
 import { WrappComment } from "../../../App.style";
-import { Comments } from "../../../asserts/interfaces/interfaces";
+import { CommentsStruct, Reply } from "../../../asserts/interfaces/interfaces";
+import { Avatar } from "../../atoms/Button/avatar/Avatar";
 import Button from "../../atoms/Button/Button";
+import { CommentAuthor } from "../../molecules/commentAuthor/commentAuthor";
+import { CommentButton } from "../../molecules/commentButton/commentButton";
+import { ScoreWrapp } from "../../molecules/scoreWrapp/ScoreWrapp";
 import AddCommentSection from "../addCommentSection/AddCommentSection";
-import { Avatar, Content, CreatedAt, EditScore, ReplyingTo, Score, ScoreWrapp, User, UserName, Wrapp, WrapRow, WrapRowButton } from "./comment.style";
+import { Content, ReplyingTo, Wrapp } from "./comment.style";
 
-const Comment: React.FC<Comments> = ({ user: { username, image: { png } }, replyingTo, content, createdAt, score, isReply, isCurrentlyUser, handleChangeScore, handleReplying, id, key }) => {
+interface Props extends Reply, CommentsStruct{
+    isReply: boolean,
+    handleChangeScore: (event: BaseSyntheticEvent, id: number) => void,
+    handleReplying: (id: number) => void, 
+    key: React.Key,
+  }
+
+const Comment: React.FC<Props> = ({ user, replyingTo, content, createdAt, score, isReply, isCurrentlyUser, handleChangeScore, handleReplying, id, key }) => {
     return (
         <Wrapp key={key} isReply={isReply}>
-            <WrapRow>
-                <Avatar src={png} alt="avatar" />
-                <UserName> {username} </UserName>
-                {isCurrentlyUser ? <User>you</User> : null}
-                <CreatedAt> {createdAt} </CreatedAt>
-            </WrapRow>
+            <CommentAuthor createdAt={createdAt} isCurrentlyUser={isCurrentlyUser} user={user}/>
             <Content>
                 {isReply ? <ReplyingTo> @{replyingTo} </ReplyingTo> : null}
                 {content}
             </Content>
-            <WrapRowButton>
-                <ScoreWrapp>
-                    <EditScore onClick={(event: BaseSyntheticEvent) => handleChangeScore(event, id)}> + </EditScore>
-                    <Score> {score} </Score>
-                    <EditScore onClick={(event: BaseSyntheticEvent) => handleChangeScore(event, id)}> - </EditScore>
-                </ScoreWrapp>
-                {isCurrentlyUser ?
-                    <WrapRowButton>
-                        <Button
-                            handleReplying={handleReplying}
-                            id={id}
-                            text="Delete"
-                            isDelete
-                            img="\images\icon-delete.svg" />
-                        <Button
-                            handleReplying={handleReplying}
-                            id={id}
-                            text="Edit"
-                            img="\images\icon-edit.svg" />
-                    </WrapRowButton>
-                    :
-                    <Button
-                        handleReplying={handleReplying}
-                        id={id}
-                        text="Reply"
-                        img="\images\icon-reply.svg" />
-                }
-            </WrapRowButton>
+           <CommentButton id={id} score={score} isCurrentlyUser={isCurrentlyUser} handleChangeScore={handleChangeScore} handleReplying={handleReplying}/>
         </Wrapp>
 
     )

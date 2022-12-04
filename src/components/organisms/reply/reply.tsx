@@ -11,10 +11,11 @@ interface Props{
     handleReplying: (arr: CommentsStruct | ReplyStruct) => void, 
     handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void
     handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
+    handleOpenModal: (arr: CommentsStruct | ReplyStruct) => void,
     key: React.Key,
   }
 
-const Reply: React.FC<Props> = ({ reply ,handleChangContent, handleSetUpdateMode,  handleChangeScore, handleReplying, key }) => {
+const Reply: React.FC<Props> = ({ reply ,handleChangContent, handleSetUpdateMode, handleOpenModal, handleChangeScore, handleReplying, key }) => {
     const {id, user, replyingTo, content, createdAt, score, isCurrentlyUser, isUpdate} = reply
     const [commentConent, setCommentContent] = useState(content)
     const handleChangeContent = (e: BaseSyntheticEvent) =>{
@@ -40,6 +41,7 @@ const Reply: React.FC<Props> = ({ reply ,handleChangContent, handleSetUpdateMode
                 isCurrentlyUser={isCurrentlyUser} 
                 isUpdate={isUpdate}
                 commentConent={commentConent}
+                handleOpenModal={handleOpenModal}
                 handleChangeScore={handleChangeScore} 
                 handleReplying={handleReplying}
                 handleSetUpdateMode={handleSetUpdateMode}

@@ -7,12 +7,21 @@ import { CommentsStruct, ReplyStruct } from './asserts/interfaces/interfaces';
 import { currentUserInitState, initialState } from './asserts/helpers/initialState/InitialState';
 import { useComment } from './asserts/helpers/hooks/useComment';
 import Reply from './components/organisms/reply/reply';
+import { Modal } from './components/organisms/modal/modal';
 
 
 const App: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false)
   const [comments, setComments] = useState<CommentsStruct[]>(initialState)
   const [currentUser, setCurrentUser] = useState(currentUserInitState)
+
   
+  const handleCloseModal = () =>{
+    setIsOpen(false)
+  }
+  const handleOpenModal = (arr: CommentsStruct | ReplyStruct) =>{
+    setIsOpen(true)
+  }
   const handleSetComments = (changeComments: CommentsStruct[]) =>{
     setComments(changeComments)
   }
@@ -69,6 +78,9 @@ const App: React.FC = () => {
   },[currentUser])
 
   return (
+    <>
+    <Modal open={isOpen} onClose={handleCloseModal} />
+
     <Wrapp >
       <WrappComment>
         {comments.map((comment)=>(
@@ -80,6 +92,7 @@ const App: React.FC = () => {
               handleReplying={handleReplying}
               handleChangContent={handleChangContent}
               handleSetUpdateMode={handleToggleUpdateMode}
+              handleOpenModal={handleOpenModal}
               />
             {comment.replies !== undefined && comment.replies.length > 0 ? 
               <WrappReplyComment>
@@ -91,8 +104,9 @@ const App: React.FC = () => {
                   handleReplying={handleReplying}
                   handleChangContent={handleChangContent}
                   handleSetUpdateMode={handleToggleUpdateMode}
+                  handleOpenModal={handleOpenModal}
                   />
-                ))}
+                  ))}
               </WrappReplyComment> : null}
           </>
         ))}
@@ -105,6 +119,7 @@ const App: React.FC = () => {
           userImage={currentUser.image.png}/>
       </WrappComment>
     </Wrapp>
+  </>
   );
 }
 export default App;

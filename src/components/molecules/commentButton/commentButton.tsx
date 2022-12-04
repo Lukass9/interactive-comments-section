@@ -14,10 +14,12 @@ interface Props {
     score: number,
     isCurrentlyUser?: boolean,
     isUpdate?: boolean,
-    handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void
-    handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string)=> void
+    handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void,
+    handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string)=> void,
+    handleOpenModal: (arr: CommentsStruct | ReplyStruct) => void,
+
 }
-export const CommentButton: React.FC<Props> = ({arr, handleChangContent, commentConent, handleSetUpdateMode,handleChangeScore, id, score, isCurrentlyUser, isUpdate, handleReplying}) => {
+export const CommentButton: React.FC<Props> = ({arr, handleChangContent, commentConent, handleOpenModal, handleSetUpdateMode,handleChangeScore, id, score, isCurrentlyUser, isUpdate, handleReplying}) => {
     return (
         <WrapRowButton>
             <ScoreWrapp handleChangeScore={handleChangeScore} arr={arr} score={score} />
@@ -27,7 +29,7 @@ export const CommentButton: React.FC<Props> = ({arr, handleChangContent, comment
             isCurrentlyUser ?
                 <WrapRowButton>
                     <Button
-                        handleAction={handleReplying}
+                        handleAction={handleOpenModal}
                         arr={arr}
                         text="Delete"
                         isDelete

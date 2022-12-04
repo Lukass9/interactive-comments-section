@@ -9,11 +9,12 @@ interface Props {
     handleChangeScore: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct) => void,
     handleReplying: (arr: CommentsStruct | ReplyStruct) => void, 
     handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
-    handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void
+    handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void,
+    handleOpenModal: (arr: CommentsStruct | ReplyStruct) => void,
     key: React.Key,
   }
 
-const Comment: React.FC<Props> = ({arr, handleSetUpdateMode, handleChangContent, handleChangeScore, handleReplying, key}) => {
+const Comment: React.FC<Props> = ({arr, handleSetUpdateMode,handleOpenModal, handleChangContent, handleChangeScore, handleReplying, key}) => {
     const  {id, user, content, createdAt, score, isCurrentlyUser, isUpdate} = arr
     const [commentConent, setCommentContent] = useState(content)
     const handleChangeContent = (e: BaseSyntheticEvent) =>{
@@ -41,6 +42,7 @@ const Comment: React.FC<Props> = ({arr, handleSetUpdateMode, handleChangContent,
             handleReplying={handleReplying}
             handleSetUpdateMode={handleSetUpdateMode}
             handleChangContent={handleChangContent}
+            handleOpenModal={handleOpenModal}
             />
         </Wrapp>
 

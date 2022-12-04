@@ -8,18 +8,28 @@ import { currentUserInitState, initialState } from './asserts/helpers/initialSta
 import { useComment } from './asserts/helpers/hooks/useComment';
 import Reply from './components/organisms/reply/reply';
 import { Modal } from './components/organisms/modal/modal';
-
+import { findIndex } from './asserts/helpers/function/findIndex';
 
 const App: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [currentID, setCurrentID] = useState(0)
   const [comments, setComments] = useState<CommentsStruct[]>(initialState)
-  const [currentUser, setCurrentUser] = useState(currentUserInitState)
+  const [currentUser, setCurrentUser] = useState(currentUserInitState)  
 
-  
+  const handleDeleteItem = () =>{
+    console.log(currentID)
+    const index: number | number[] = findIndex(comments,currentID)
+    if(typeof index === 'number') comments.splice(index, 1)
+    else comments.at(index[0])?.replies?.splice(index[1], 1)
+    setComments([...comments])
+    setIsOpen(false)
+    console.log(comments)
+  }
   const handleCloseModal = () =>{
     setIsOpen(false)
-  }
+  }  
   const handleOpenModal = (arr: CommentsStruct | ReplyStruct) =>{
+    setCurrentID(arr.id)
     setIsOpen(true)
   }
   const handleSetComments = (changeComments: CommentsStruct[]) =>{
@@ -79,7 +89,7 @@ const App: React.FC = () => {
 
   return (
     <>
-    <Modal open={isOpen} onClose={handleCloseModal} />
+    <Modal open={isOpen} onClose={handleCloseModal} deleteItem={handleDeleteItem}/>
 
     <Wrapp >
       <WrappComment>

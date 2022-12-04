@@ -32,6 +32,7 @@ const modalRoot = document.getElementById("modal") as HTMLElement;
 interface Props {
     open: boolean,
     onClose: ()=> void,
+    deleteItem: ()=> void,
 }
 export const Modal: React.FC<Props> = props => {
     if(!props.open) return null
@@ -44,7 +45,7 @@ export const Modal: React.FC<Props> = props => {
                 <p>Are you sure you want to delete this comment? This will remove the comment and can't be undone.</p>
                 <WrappButton>
                     <button onClick={props.onClose}>NO, CANCEL</button>
-                    <button>YES, DELETE</button>
+                    <button onClick={props.deleteItem}>YES, DELETE</button>
                 </WrappButton>
             </Wrapp>
         </>

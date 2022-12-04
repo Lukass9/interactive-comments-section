@@ -1,0 +1,31 @@
+import { Children } from "react";
+import styled from 'styled-components'
+import { CommentsStruct, ReplyStruct } from "../../../asserts/interfaces/interfaces";
+
+export const Button = styled.button`
+    background-color: hsl(238, 40%, 52%);
+    color: hsl(0, 0%, 100%);
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 1px solid hsl(238, 40%, 52%);
+    border-radius: 5px;
+`
+
+interface Props {
+    children: string
+    arr?: CommentsStruct | ReplyStruct,
+    newContent?: string,
+    handleAction?: (arr: CommentsStruct | ReplyStruct, newContent: string) => void
+}
+
+export const SubimtButton: React.FC<Props> = ({children, handleAction, arr, newContent}) => {
+    return (
+        <>
+            {handleAction && arr && newContent
+            ? 
+                <Button onClick={()=>handleAction(arr, newContent)}> {children} </Button>
+            :
+                <Button> {children} </Button>
+            }
+        </>
+)};

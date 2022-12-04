@@ -1,5 +1,5 @@
 import { User } from "../../../asserts/interfaces/interfaces";
-import { Avatar } from "../../atoms/Button/avatar/Avatar";
+import { Avatar } from "../../atoms/avatar/Avatar";
 import { CreatedAt, UserName, UserStyle, WrapRow } from "./commentAuthor.style";
 
 interface Props {

@@ -1,25 +1,47 @@
-import React, { BaseSyntheticEvent } from "react";
-import { CommentsStruct, Reply } from "../../../asserts/interfaces/interfaces";
+import React, { BaseSyntheticEvent, useState } from "react";
+import { CommentsStruct, ReplyStruct } from "../../../asserts/interfaces/interfaces";
 import { CommentAuthor } from "../../molecules/commentAuthor/commentAuthor";
 import { CommentButton } from "../../molecules/commentButton/commentButton";
-import { Content, ReplyingTo, Wrapp } from "./comment.style";
+import { CommentAreaMod, Content, Wrapp } from "./comment.style";
 
-interface Props extends Reply, CommentsStruct{
-    isReply: boolean,
-    handleChangeScore: (event: BaseSyntheticEvent, id: number) => void,
-    handleReplying: (id: number) => void, 
+interface Props {
+    arr: CommentsStruct,
+    handleChangeScore: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct) => void,
+    handleReplying: (arr: CommentsStruct | ReplyStruct) => void, 
+    handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
+    handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void
     key: React.Key,
   }
 
-const Comment: React.FC<Props> = ({ user, replyingTo, content, createdAt, score, isReply, isCurrentlyUser, handleChangeScore, handleReplying, id, key }) => {
+const Comment: React.FC<Props> = ({arr, handleSetUpdateMode, handleChangContent, handleChangeScore, handleReplying, key}) => {
+    const  {id, user, content, createdAt, score, isCurrentlyUser, isUpdate} = arr
+    const [commentConent, setCommentContent] = useState(content)
+    const handleChangeContent = (e: BaseSyntheticEvent) =>{
+        setCommentContent(e.target.value)
+    }
     return (
-        <Wrapp key={key} isReply={isReply}>
+        <Wrapp key={key}>
             <CommentAuthor createdAt={createdAt} isCurrentlyUser={isCurrentlyUser} user={user}/>
-            <Content>
-                {isReply ? <ReplyingTo> @{replyingTo} </ReplyingTo> : null}
-                {content}
-            </Content>
-           <CommentButton id={id} score={score} isCurrentlyUser={isCurrentlyUser} handleChangeScore={handleChangeScore} handleReplying={handleReplying}/>
+            {isUpdate
+            ? 
+                <CommentAreaMod onChange={handleChangeContent} value={commentConent}/>
+            :
+                <Content>
+                    {content}
+                </Content>
+            }
+           <CommentButton
+            arr={arr}
+            id={id} 
+            score={score} 
+            isCurrentlyUser={isCurrentlyUser} 
+            isUpdate={isUpdate}
+            commentConent={commentConent}
+            handleChangeScore={handleChangeScore} 
+            handleReplying={handleReplying}
+            handleSetUpdateMode={handleSetUpdateMode}
+            handleChangContent={handleChangContent}
+            />
         </Wrapp>
 
     )

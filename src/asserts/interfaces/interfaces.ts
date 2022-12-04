@@ -12,16 +12,16 @@ export interface BasicCommentStruct{
   content: string,
   createdAt: string,
   score: number,
+  isCurrentlyUser?: boolean,
+  isUpdate?: boolean,
   user: User,
 }
 
-export interface Reply extends BasicCommentStruct{
+export interface ReplyStruct extends BasicCommentStruct{
   replyingTo?: string,
-  isCurrentlyUser?: boolean,
 }
 
 export interface CommentsStruct extends BasicCommentStruct{
-    replies?:  Reply[],
-    isCurrentlyUser?: boolean,
+    replies?:  ReplyStruct[],
     isWriteComment?: boolean,
 }

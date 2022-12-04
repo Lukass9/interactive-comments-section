@@ -1,18 +1,17 @@
 import styled from "styled-components"
-import { CommentArea } from "../addCommentSection/AddCommentSection"
 
 export const Wrapp = styled.section`
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 95vw;
+    width: 90vw;
     background-color: #ffffff;
     padding: 20px;
     margin: 9.375px 2.5vw 0 0;
     border-radius: 10px;
 
     :first-child{
-        margin-top: 9.375px;
+        margin-top: 0px;
     }
 `
 export const Content = styled.p`
@@ -26,8 +25,4 @@ export const ReplyingTo = styled.p`
     font-weight: bold;
     margin: 0;
     padding: 0;
-`
-export const CommentAreaMod = styled(CommentArea)` 
-    order: 0;
-    margin-top: 5px;
 `

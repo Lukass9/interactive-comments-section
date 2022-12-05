@@ -1,5 +1,6 @@
 import { BaseSyntheticEvent, useState } from "react"
 import { CommentsStruct, User } from "../../interfaces/interfaces"
+import { findBiggestID } from "../function/findBigestID"
 
 export const useComment = (comments: CommentsStruct[], currentUser: User, handleSetComments:(changeComments: CommentsStruct[])=>void) =>{
     const [singleComment, setSingleComment] = useState('')
@@ -11,7 +12,7 @@ export const useComment = (comments: CommentsStruct[], currentUser: User, handle
     const handleAddComment = (e: BaseSyntheticEvent) =>{ 
       e.preventDefault()
       const SetSingleComment: CommentsStruct = {
-        id: comments[comments.length-1].id + 1,
+        id: findBiggestID(comments) + 1,
         content: singleComment,
         createdAt: "Przed chwilą",
         isCurrentlyUser: true,

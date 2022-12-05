@@ -9,6 +9,7 @@ import { useComment } from './asserts/helpers/hooks/useComment';
 import Reply from './components/organisms/reply/reply';
 import { Modal } from './components/organisms/modal/modal';
 import { findIndex } from './asserts/helpers/function/findIndex';
+import { findBiggestID } from './asserts/helpers/function/findBigestID';
 
 const App: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -17,7 +18,6 @@ const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState(currentUserInitState)  
 
   const handleDeleteItem = () =>{
-    console.log(currentID)
     const index: number | number[] = findIndex(comments,currentID)
     if(typeof index === 'number') comments.splice(index, 1)
     else comments.at(index[0])?.replies?.splice(index[1], 1)
@@ -52,11 +52,24 @@ const App: React.FC = () => {
     else if(event.target.firstChild.data === " + ") arr.score++ 
     setComments([...comments])
   }
+
   const handleReplying = (arr: CommentsStruct | ReplyStruct) =>{
-    // console.log("id", id)
-    // console.log("findIndex", findIndex(comments, id))
-    // console.log("typeof", typeof findIndex(comments, id))
+    console.log(arr)
+    let index: number | number[] = findIndex(comments,arr.id)
+    if(typeof index !== "number") index = index[0]
+    console.log("INDEX = ", index)
+    comments[index].replies?.push({
+      id: findBiggestID(comments) + 1,
+      content:'Nowy kontent',
+      createdAt:'now',
+      isCurrentlyUser: true,
+      score:0,
+      user: currentUser,
+      replyingTo: arr.user.username
+    })
+    setComments([...comments])
   }
+
   const CheckCommentForCurrentUser = (checkComment: CommentsStruct[]) =>{
     checkComment.map(el=>{
       el.replies?.map(elReplies =>{
@@ -91,7 +104,7 @@ const App: React.FC = () => {
     <>
     <Modal open={isOpen} onClose={handleCloseModal} deleteItem={handleDeleteItem}/>
 
-    <Wrapp >
+    <Wrapp>
       <WrappComment>
         {comments.map((comment)=>(
           <>

@@ -25,6 +25,10 @@ const App: React.FC = () => {
     setIsOpen(false)
     console.log(comments)
   }
+  const handleToggleReplying = (arr: CommentsStruct | ReplyStruct) =>{
+    arr.isReplying = !arr.isReplying
+    setComments([...comments])
+  }
   const handleCloseModal = () =>{
     setIsOpen(false)
   }  
@@ -53,20 +57,21 @@ const App: React.FC = () => {
     setComments([...comments])
   }
 
-  const handleReplying = (arr: CommentsStruct | ReplyStruct) =>{
+  const handleReplying = (arr: CommentsStruct | ReplyStruct, newContent: string) =>{
     console.log(arr)
     let index: number | number[] = findIndex(comments,arr.id)
     if(typeof index !== "number") index = index[0]
     console.log("INDEX = ", index)
     comments[index].replies?.push({
       id: findBiggestID(comments) + 1,
-      content:'Nowy kontent',
+      content: newContent,
       createdAt:'now',
       isCurrentlyUser: true,
       score:0,
       user: currentUser,
       replyingTo: arr.user.username
     })
+    arr.isReplying = false
     setComments([...comments])
   }
 
@@ -111,6 +116,7 @@ const App: React.FC = () => {
             <Comment
               arr={comment}
               key={`key + ${comment.id}`}
+              handleToggleReplying={handleToggleReplying}
               handleChangeScore={handleChangeScore}
               handleReplying={handleReplying}
               handleChangContent={handleChangContent}
@@ -122,7 +128,8 @@ const App: React.FC = () => {
                 {comment.replies.map(repl=>(
                   <Reply
                   reply={repl}
-                  key={`keyReplies + ${repl.id}`}  
+                  key={`keyReplies + ${repl.id}`}
+                  handleToggleReplying={handleToggleReplying}  
                   handleChangeScore={handleChangeScore}
                   handleReplying={handleReplying}
                   handleChangContent={handleChangContent}

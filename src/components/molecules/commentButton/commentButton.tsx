@@ -7,19 +7,17 @@ import { CommentsStruct, ReplyStruct } from "../../../asserts/interfaces/interfa
 
 interface Props { 
     handleChangeScore: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct) => void,
-    handleReplying: (arr: CommentsStruct | ReplyStruct) => void, 
     commentConent: string,
     arr: CommentsStruct | ReplyStruct,
-    id: number,
     score: number,
     isCurrentlyUser?: boolean,
     isUpdate?: boolean,
     handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void,
     handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string)=> void,
     handleOpenModal: (arr: CommentsStruct | ReplyStruct) => void,
-
+    handleToggleReplying: (arr: CommentsStruct | ReplyStruct) => void,
 }
-export const CommentButton: React.FC<Props> = ({arr, handleChangContent, commentConent, handleOpenModal, handleSetUpdateMode,handleChangeScore, id, score, isCurrentlyUser, isUpdate, handleReplying}) => {
+export const CommentButton: React.FC<Props> = ({ arr,handleToggleReplying, handleChangContent, commentConent, handleOpenModal, handleSetUpdateMode,handleChangeScore, score, isCurrentlyUser, isUpdate}) => {
     return (
         <WrapRowButton>
             <ScoreWrapp handleChangeScore={handleChangeScore} arr={arr} score={score} />
@@ -42,7 +40,7 @@ export const CommentButton: React.FC<Props> = ({arr, handleChangContent, comment
                 </WrapRowButton>
                 :
                 <Button
-                    handleAction={handleReplying}
+                    handleAction={handleToggleReplying}
                     arr={arr}
                     text="Reply"
                     img="\images\icon-reply.svg" />

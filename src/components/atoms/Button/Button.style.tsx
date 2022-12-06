@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const WrapButton = styled.button`
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     background-color: #fff;
     border-radius: 10px;
     font-weight: bolder;

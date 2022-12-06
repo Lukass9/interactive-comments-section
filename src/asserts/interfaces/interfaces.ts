@@ -14,6 +14,7 @@ export interface BasicCommentStruct{
   score: number,
   isCurrentlyUser?: boolean,
   isUpdate?: boolean,
+  isReplying?: boolean,
   user: User,
 }
 
@@ -23,5 +24,4 @@ export interface ReplyStruct extends BasicCommentStruct{
 
 export interface CommentsStruct extends BasicCommentStruct{
     replies?:  ReplyStruct[],
-    isWriteComment?: boolean,
 }

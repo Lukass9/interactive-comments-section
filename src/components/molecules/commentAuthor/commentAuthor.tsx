@@ -5,7 +5,7 @@ import { CreatedAt, UserName, UserStyle, WrapRow } from "./commentAuthor.style";
 interface Props {
     user: User,
     isCurrentlyUser?: boolean,
-    createdAt: string
+    createdAt?: string
 }
 
 export const CommentAuthor: React.FC<Props> = ({ user: { username, image: { png } }, createdAt,isCurrentlyUser}) => {

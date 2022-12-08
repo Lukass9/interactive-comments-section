@@ -72,8 +72,11 @@ export const useComment = () =>{
       handleToggleUpdateMode(arr)
     }
     const handleChangeScore = (event: BaseSyntheticEvent ,arr: CommentsStruct | ReplyStruct) =>{
+      if(arr.isChangeScore || arr.isCurrentlyUser) return
+
       if(event.target.firstChild.data === " - " && arr.score > 0) arr.score--;
       else if(event.target.firstChild.data === " + ") arr.score++ 
+      arr.isChangeScore = true
       setComments([...comments])
     }
     const handleReplying = (arr: CommentsStruct | ReplyStruct, newContent: string) =>{
@@ -110,6 +113,7 @@ export const useComment = () =>{
         }
       })
     },[] ) 
+    
     useEffect(()=>{
       const savedCommentsStates: CommentsStruct[] = []
       data.comments.map((comment : CommentsStruct )=>{

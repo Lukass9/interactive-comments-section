@@ -1,10 +1,8 @@
-import React, { BaseSyntheticEvent, useEffect, useState } from "react";
+import React, { BaseSyntheticEvent, useState } from "react";
 import { CommentsStruct, ReplyStruct } from "../../../asserts/interfaces/interfaces";
-import { WrapButton } from "../../atoms/Button/Button.style";
-import { SubimtButton } from "../../atoms/submitButton/SubimtButton";
+import { CommentAreaMod } from "../../atoms/comentAreaMod/ComentAreaMod";
 import { CommentAuthor } from "../../molecules/commentAuthor/commentAuthor";
 import { CommentButton } from "../../molecules/commentButton/commentButton";
-import { CommentAreaMod } from "../comment/comment.style";
 import { ReplyTextArea } from "../replyTextArea/ReplyTextArea";
 import { Content, ReplyingTo, Wrapp } from "./reply.style";
 
@@ -24,7 +22,7 @@ interface Props {
 const Reply: React.FC<Props> = ({ reply, handleChangeReplying, newReplying, handleToggleReplying, handleChangContent, handleSetUpdateMode, handleOpenModal, handleChangeScore, handleReplying, key }) => {
     const { user, replyingTo, content, createdAt, score, isCurrentlyUser, isUpdate, isReplying} = reply
     const [commentConent, setCommentContent] = useState(content)
-    const handleChangeContent = (e: BaseSyntheticEvent) => {
+    const handleEditContent = (e: BaseSyntheticEvent) => {
         setCommentContent(e.target.value)
     }
     return (
@@ -33,7 +31,7 @@ const Reply: React.FC<Props> = ({ reply, handleChangeReplying, newReplying, hand
                 <CommentAuthor createdAt={createdAt} isCurrentlyUser={isCurrentlyUser} user={user} />
                 {isUpdate
                     ?
-                    <CommentAreaMod onChange={handleChangeContent} value={commentConent} />
+                    <CommentAreaMod handleEditContent={handleEditContent} commentConent={commentConent}/>
                     :
                     <Content>
                         <ReplyingTo> @{replyingTo} </ReplyingTo>

@@ -1,5 +1,3 @@
-import { BaseSyntheticEvent } from "react"
-
 export interface User {
   username: string,
   image: {
@@ -15,6 +13,7 @@ export interface BasicCommentStruct{
   isCurrentlyUser?: boolean,
   isUpdate?: boolean,
   isReplying?: boolean,
+  isChangeScore?: boolean,
   user: User,
 }
 

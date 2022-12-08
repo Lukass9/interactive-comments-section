@@ -27,7 +27,3 @@ export const ReplyingTo = styled.p`
     margin: 0;
     padding: 0;
 `
-export const CommentAreaMod = styled(CommentArea)` 
-    order: 0;
-    margin-top: 5px;
-`

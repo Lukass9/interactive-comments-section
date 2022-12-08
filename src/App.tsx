@@ -5,9 +5,25 @@ import { useComment } from './asserts/helpers/hooks/useComment';
 import Reply from './components/organisms/reply/reply';
 import { Modal } from './components/organisms/modal/modal';
 
+// TODO - dodaj Intl.RelativeTimeFormat do odmierzania czasu w komentarzach
+
 const App: React.FC = () => {
-  const {comments, currentUser, handleDeleteItem,  handleChangeReplying, newReplying, handleOpenModal, handleToggleUpdateMode ,handleChangContent,  handleReplying,  handleChangeScore, handleToggleReplying, isOpen, handleCloseModal, singleComment, handleSetSingleComment, handleAddComment } = useComment()
-  
+  const { comments, 
+          currentUser, 
+          handleDeleteItem,  
+          handleChangeReplying, 
+          newReplying, 
+          handleOpenModal, 
+          handleToggleUpdateMode,
+          handleChangContent,
+          handleReplying, 
+          handleChangeScore, 
+          handleToggleReplying, 
+          isOpen, 
+          handleCloseModal, 
+          singleComment, 
+          handleSetSingleComment, 
+          handleAddComment } = useComment()
   return (
     <>
     <Modal open={isOpen} onClose={handleCloseModal} deleteItem={handleDeleteItem}/>

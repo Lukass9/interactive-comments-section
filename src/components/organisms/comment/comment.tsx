@@ -4,29 +4,29 @@ import { WrapButton } from "../../atoms/Button/Button.style";
 import { SubimtButton } from "../../atoms/submitButton/SubimtButton";
 import { CommentAuthor } from "../../molecules/commentAuthor/commentAuthor";
 import { CommentButton } from "../../molecules/commentButton/commentButton";
+import { ReplyTextArea } from "../replyTextArea/ReplyTextArea";
 import { CommentAreaMod, Content, Wrapp } from "./comment.style";
 
 interface Props {
     arr: CommentsStruct,
+    newReplying: string,
     handleChangeScore: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct) => void,
     handleReplying: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
     handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
     handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void,
     handleOpenModal: (arr: CommentsStruct | ReplyStruct) => void,
     handleToggleReplying: (arr: CommentsStruct | ReplyStruct) => void,
+    handleChangeReplying:(e: BaseSyntheticEvent) => void,
     key: React.Key,
 }
 
-const Comment: React.FC<Props> = ({ arr, handleToggleReplying, handleSetUpdateMode, handleOpenModal, handleChangContent, handleChangeScore, handleReplying, key }) => {
+const Comment: React.FC<Props> =({ arr, handleChangeReplying, newReplying, handleToggleReplying, handleSetUpdateMode, handleOpenModal, handleChangContent, handleChangeScore, handleReplying, key }) => {
     const {user, content, createdAt, score, isCurrentlyUser, isUpdate, isReplying } = arr
     const [commentConent, setCommentContent] = useState(content)
-    const [newReplying, setNewReplying] = useState()
     const handleChangeContent = (e: BaseSyntheticEvent) => {
         setCommentContent(e.target.value)
     }
-    const handleChangeReplying = (e: BaseSyntheticEvent) => {
-        setNewReplying(e.target.value)
-    }
+
     return (
         <>
             <Wrapp key={key}>
@@ -52,12 +52,16 @@ const Comment: React.FC<Props> = ({ arr, handleToggleReplying, handleSetUpdateMo
                     handleToggleReplying={handleToggleReplying}
                 />
             </Wrapp>
-            {isReplying? <Wrapp>
-                <CommentAuthor  isCurrentlyUser={isCurrentlyUser} user={user} />
-                <CommentAreaMod onChange={handleChangeReplying} value={newReplying} />
-                <WrapButton>
-                    <SubimtButton newContent={newReplying} arr={arr} handleAction={handleReplying}>REPLY</SubimtButton>
-                </WrapButton>
+            {isReplying? 
+            <Wrapp>
+                <ReplyTextArea 
+                    isCurrentlyUser={isCurrentlyUser} 
+                    user={user}
+                    arr={arr}
+                    handleChangeReplying={handleChangeReplying}
+                    handleReplying={handleReplying}
+                    newReplying={newReplying}
+                    />
             </Wrapp>
             :null}
         </>

@@ -2,7 +2,7 @@ import Comment from './components/organisms/comment/comment';
 import data from './asserts/data/data.json';
 import AddCommentSection from './components/organisms/addCommentSection/AddCommentSection';
 import { Wrapp, WrappComment, WrappReplyComment } from './App.style';
-import { BaseSyntheticEvent, useEffect, useState } from 'react';
+import { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
 import { CommentsStruct, ReplyStruct } from './asserts/interfaces/interfaces';
 import { currentUserInitState, initialState } from './asserts/helpers/initialState/InitialState';
 import { useComment } from './asserts/helpers/hooks/useComment';
@@ -12,18 +12,21 @@ import { findIndex } from './asserts/helpers/function/findIndex';
 import { findBiggestID } from './asserts/helpers/function/findBigestID';
 
 const App: React.FC = () => {
+  const [newReplying, setNewReplying] = useState("")
   const [isOpen, setIsOpen] = useState(false)
   const [currentID, setCurrentID] = useState(0)
   const [comments, setComments] = useState<CommentsStruct[]>(initialState)
-  const [currentUser, setCurrentUser] = useState(currentUserInitState)  
+  const [currentUser, setCurrentUser] = useState(currentUserInitState)
 
+  const handleChangeReplying = (e: BaseSyntheticEvent) => {
+    setNewReplying(e.target.value)
+  }
   const handleDeleteItem = () =>{
     const index: number | number[] = findIndex(comments,currentID)
     if(typeof index === 'number') comments.splice(index, 1)
     else comments.at(index[0])?.replies?.splice(index[1], 1)
     setComments([...comments])
     setIsOpen(false)
-    console.log(comments)
   }
   const handleToggleReplying = (arr: CommentsStruct | ReplyStruct) =>{
     arr.isReplying = !arr.isReplying
@@ -58,10 +61,8 @@ const App: React.FC = () => {
   }
 
   const handleReplying = (arr: CommentsStruct | ReplyStruct, newContent: string) =>{
-    console.log(arr)
     let index: number | number[] = findIndex(comments,arr.id)
     if(typeof index !== "number") index = index[0]
-    console.log("INDEX = ", index)
     comments[index].replies?.push({
       id: findBiggestID(comments) + 1,
       content: newContent,
@@ -73,6 +74,7 @@ const App: React.FC = () => {
     })
     arr.isReplying = false
     setComments([...comments])
+    setNewReplying("")
   }
 
   const CheckCommentForCurrentUser = (checkComment: CommentsStruct[]) =>{
@@ -92,11 +94,9 @@ const App: React.FC = () => {
         png: data.currentUser.image.png
       }
     })
-
   },[] )
 
   useEffect(()=>{
-
     const savedCommentsStates: CommentsStruct[] = []
     data.comments.map((comment : CommentsStruct )=>{
       const singleComment: CommentsStruct = comment
@@ -122,6 +122,8 @@ const App: React.FC = () => {
               handleChangContent={handleChangContent}
               handleSetUpdateMode={handleToggleUpdateMode}
               handleOpenModal={handleOpenModal}
+              newReplying={newReplying}
+              handleChangeReplying={handleChangeReplying}
               />
             {comment.replies !== undefined && comment.replies.length > 0 ? 
               <WrappReplyComment>
@@ -135,6 +137,8 @@ const App: React.FC = () => {
                   handleChangContent={handleChangContent}
                   handleSetUpdateMode={handleToggleUpdateMode}
                   handleOpenModal={handleOpenModal}
+                  newReplying={newReplying}
+                  handleChangeReplying={handleChangeReplying}
                   />
                   ))}
               </WrappReplyComment> : null}

@@ -10,6 +10,7 @@ export const initialState: CommentsStruct[] = [{
   id: 0,
   content: '',
   createdAt: '',
+  timestamp: 0,
   score: 0,
   user: currentUserInitState,
   isCurrentlyUser: false

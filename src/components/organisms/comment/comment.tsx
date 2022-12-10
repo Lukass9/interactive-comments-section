@@ -1,4 +1,5 @@
-import React, { BaseSyntheticEvent, useState } from "react";
+import React, { BaseSyntheticEvent, useEffect, useState } from "react";
+import { setTimestamForComment } from "../../../asserts/helpers/function/setTimestampForComment";
 import { CommentsStruct, ReplyStruct } from "../../../asserts/interfaces/interfaces";
 import { CommentAreaMod } from "../../atoms/comentAreaMod/ComentAreaMod";
 import { CommentAuthor } from "../../molecules/commentAuthor/commentAuthor";
@@ -9,6 +10,7 @@ import { Content, Wrapp } from "./comment.style";
 interface Props {
     arr: CommentsStruct,
     newReplying: string,
+    timestamp: number,
     handleChangeScore: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct) => void,
     handleReplying: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
     handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
@@ -19,13 +21,16 @@ interface Props {
     key: React.Key,
 }
 
-const Comment: React.FC<Props> = ({ arr, handleChangeReplying, newReplying, handleToggleReplying, handleSetUpdateMode, handleOpenModal, handleChangContent, handleChangeScore, handleReplying, key }) => {
-    const { user, content, createdAt, score, isCurrentlyUser, isUpdate, isReplying } = arr
+const Comment: React.FC<Props> = ({ arr, timestamp, handleChangeReplying, newReplying, handleToggleReplying, handleSetUpdateMode, handleOpenModal, handleChangContent, handleChangeScore, handleReplying, key }) => {
+    const { user, content, createdAt, score, isCurrentlyUser, isUpdate, isReplying, timestamp: postTimestamp} = arr
     const [commentConent, setCommentContent] = useState(content)
     const handleEditContent = (e: BaseSyntheticEvent) => {
         setCommentContent(e.target.value)
     }
 
+    useEffect(()=>{
+        setTimestamForComment(postTimestamp, timestamp, arr)
+    },[timestamp])
     return (
         <>
             <Wrapp key={key}>

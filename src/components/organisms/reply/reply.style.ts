@@ -18,6 +18,7 @@ export const Content = styled.p`
     color: #324152;
     line-height: 23px;
     letter-spacing: .5px;
+    word-break: break-word;
 `
 export const ReplyingTo = styled.p`
     display: inline;

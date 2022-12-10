@@ -7,13 +7,13 @@ interface Button{
     text: string,
     img: string,
     arr: CommentsStruct | ReplyStruct,
-    isDelete?: boolean
+    isDelete?: boolean,
     handleAction: (arr: CommentsStruct | ReplyStruct) => void, 
 }
 
 const Button: React.FC<Button> = ({text,img, isDelete, handleAction, arr}) =>{
     return (
-        <WrapButton onClick = {()=>handleAction(arr)}>
+        <WrapButton onClick = {()=>{handleAction(arr)}}>
             <img src={img} alt={text}/>
             <ButtonText isDelete={isDelete}>{text}</ButtonText>
         </WrapButton>

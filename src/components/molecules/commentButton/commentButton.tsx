@@ -16,13 +16,14 @@ interface Props {
     handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string)=> void,
     handleOpenModal: (arr: CommentsStruct | ReplyStruct) => void,
     handleToggleReplying: (arr: CommentsStruct | ReplyStruct) => void,
+    AdditionalValue?: string,
 }
-export const CommentButton: React.FC<Props> = ({ arr,handleToggleReplying, handleChangContent, commentConent, handleOpenModal, handleSetUpdateMode,handleChangeScore, score, isCurrentlyUser, isUpdate}) => {
+export const CommentButton: React.FC<Props> = ({ arr,AdditionalValue, handleToggleReplying, handleChangContent, commentConent, handleOpenModal, handleSetUpdateMode,handleChangeScore, score, isCurrentlyUser, isUpdate}) => {
     return (
         <WrapRowButton>
             <ScoreWrapp handleChangeScore={handleChangeScore} arr={arr} score={score} />
             {isUpdate ? 
-            <SubimtButton newContent={commentConent} arr={arr} handleAction={handleChangContent}>UPDATE</SubimtButton>
+            <SubimtButton AdditionalValue={AdditionalValue} newContent={commentConent} arr={arr} handleAction={handleChangContent}>UPDATE</SubimtButton>
             :
             isCurrentlyUser ?
                 <WrapRowButton>

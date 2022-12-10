@@ -10,6 +10,7 @@ import { Modal } from './components/organisms/modal/modal';
 const App: React.FC = () => {
   const { comments, 
           currentUser, 
+          timestamp,
           handleDeleteItem,  
           handleChangeReplying, 
           newReplying, 
@@ -34,6 +35,7 @@ const App: React.FC = () => {
           <>
             <Comment
               arr={comment}
+              timestamp={timestamp}
               key={`key + ${comment.id}`}
               handleToggleReplying={handleToggleReplying}
               handleChangeScore={handleChangeScore}
@@ -49,6 +51,7 @@ const App: React.FC = () => {
                 {comment.replies.map(repl=>(
                   <Reply
                   reply={repl}
+                  timestamp={timestamp}
                   key={`keyReplies + ${repl.id}`}
                   handleToggleReplying={handleToggleReplying}  
                   handleChangeScore={handleChangeScore}

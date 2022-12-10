@@ -15,15 +15,20 @@ interface Props {
     children: string
     arr?: CommentsStruct | ReplyStruct,
     newContent?: string,
-    handleAction?: (arr: CommentsStruct | ReplyStruct, newContent: string) => void
-}
+    handleAction?: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
+    AdditionalValue?: string,
+}   
 
-export const SubimtButton: React.FC<Props> = ({children, handleAction, arr, newContent}) => {
+export const SubimtButton: React.FC<Props> = ({children,AdditionalValue, handleAction, arr, newContent}) => {
     return (
         <>
             {handleAction && arr && newContent
             ? 
-                <Button onClick={()=>handleAction(arr, newContent)}> {children} </Button>
+                <Button onClick={()=>{
+                    let replyingToIndex = AdditionalValue? newContent.indexOf(AdditionalValue): 0
+                    if(replyingToIndex >= 0 && AdditionalValue) replyingToIndex = replyingToIndex + AdditionalValue.length
+                    handleAction(arr, newContent.substring(replyingToIndex))
+                }}> {children} </Button>
             :
                 <Button> {children} </Button>
             }

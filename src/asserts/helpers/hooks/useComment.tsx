@@ -1,18 +1,19 @@
 import { BaseSyntheticEvent, useEffect, useState } from "react"
-import { CommentsStruct, ReplyStruct, User } from "../../interfaces/interfaces"
+import { CommentsStruct, ReplyStruct } from "../../interfaces/interfaces"
 import { findBiggestID } from "../function/findBigestID"
 import { findIndex } from "../function/findIndex"
 import { currentUserInitState, initialState } from "../initialState/InitialState"
 import data from "../../data/data.json"
 
 export const useComment = () =>{
+    const [timestamp, setTimestamp] = useState(Date.now())
     const [singleComment, setSingleComment] = useState('')
     const [newReplying, setNewReplying] = useState("")
     const [isOpen, setIsOpen] = useState(false)
     const [currentID, setCurrentID] = useState(0)
     const [comments, setComments] = useState<CommentsStruct[]>(initialState)
     const [currentUser, setCurrentUser] = useState(currentUserInitState)
-  
+
     const handleChangeReplying = (e: BaseSyntheticEvent) => {
       setNewReplying(e.target.value)
     }
@@ -42,10 +43,13 @@ export const useComment = () =>{
     }
     const handleAddComment = (e: BaseSyntheticEvent) =>{ 
       e.preventDefault()
+      setTimestamp(Date.now())
+
       const SetSingleComment: CommentsStruct = {
         id: findBiggestID(comments) + 1,
         content: singleComment,
-        createdAt: "Przed chwilą",
+        createdAt: "now",
+        timestamp: Date.now(),
         isCurrentlyUser: true,
         isUpdate: false,
         score: 0,
@@ -72,7 +76,7 @@ export const useComment = () =>{
       handleToggleUpdateMode(arr)
     }
     const handleChangeScore = (event: BaseSyntheticEvent ,arr: CommentsStruct | ReplyStruct) =>{
-      if(arr.isChangeScore || arr.isCurrentlyUser) return
+      // if(arr.isChangeScore || arr.isCurrentlyUser) return
 
       if(event.target.firstChild.data === " - " && arr.score > 0) arr.score--;
       else if(event.target.firstChild.data === " + ") arr.score++ 
@@ -87,6 +91,7 @@ export const useComment = () =>{
         content: newContent,
         createdAt:'now',
         isCurrentlyUser: true,
+        timestamp: Date.now(),
         score:0,
         user: currentUser,
         replyingTo: arr.user.username
@@ -116,13 +121,17 @@ export const useComment = () =>{
     
     useEffect(()=>{
       const savedCommentsStates: CommentsStruct[] = []
-      data.comments.map((comment : CommentsStruct )=>{
+      data.comments.map(( comment )=>{
         const singleComment: CommentsStruct = comment
+        console.log("singleComment", singleComment)
         savedCommentsStates.push(singleComment)
       })
       setComments(CheckCommentForCurrentUser(savedCommentsStates))
     },[currentUser])
 
+    useEffect(()=>{
+      setTimestamp(Date.now())
+    }, [comments])
     return {
         singleComment,
         newReplying,
@@ -130,6 +139,7 @@ export const useComment = () =>{
         currentID,
         comments,
         currentUser,
+        timestamp,
         handleChangeReplying,
         handleDeleteItem,
         handleToggleReplying,

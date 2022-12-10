@@ -9,6 +9,7 @@ export interface BasicCommentStruct{
   id: number,
   content: string,
   createdAt: string,
+  timestamp?: number,
   score: number,
   isCurrentlyUser?: boolean,
   isUpdate?: boolean,

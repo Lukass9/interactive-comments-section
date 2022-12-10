@@ -14,7 +14,11 @@ interface Props {
 export const CommentAreaMod: React.FC<Props> = ({handleEditContent, commentConent}) => {
     const replyTextAreaRef = useRef<HTMLTextAreaElement>()
     useEffect(()=>{
+        const end = commentConent.length
+        replyTextAreaRef.current?.setSelectionRange(end,end)
         replyTextAreaRef.current?.focus()
     },[])
 
-    return <CommentAreaModStyled ref={replyTextAreaRef} onChange={handleEditContent} value={commentConent} />};
+    return (
+        <CommentAreaModStyled ref={replyTextAreaRef} onChange={handleEditContent} value={commentConent} />
+)}

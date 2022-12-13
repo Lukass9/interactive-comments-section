@@ -120,22 +120,30 @@ export const useComment = () =>{
     },[] ) 
     
     useEffect(()=>{
-      const savedCommentsStates: CommentsStruct[] = []
-      data.comments.map(( comment )=>{
-        const singleComment: CommentsStruct = comment
-        // console.log("singleComment", singleComment)
-        savedCommentsStates.push(singleComment)
-      })
+      let savedCommentsStates: CommentsStruct[] = []
+      if(localStorage.getItem("comments")) {
+        const tmp = localStorage.getItem("comments")
+        if(tmp) savedCommentsStates = JSON.parse(tmp)
+      } 
+      else{
+        data.comments.map(( comment )=>{
+          const singleComment: CommentsStruct = comment
+          savedCommentsStates.push(singleComment)
+        })
+      }
+      
       setComments(CheckCommentForCurrentUser(savedCommentsStates))
     },[currentUser])
 
     useEffect(()=>{
       setTimestamp(Date.now())
+
+      comments.sort((a,b)=>{return b.score - a.score})
+
+      if(comments[0].user.username !=='') localStorage.setItem("comments", JSON.stringify(comments))
+
     }, [comments])
 
-    useEffect(()=>{
-      comments.sort((a,b)=>{return b.score - a.score})
-    }, [comments])
     return {
         singleComment,
         newReplying,

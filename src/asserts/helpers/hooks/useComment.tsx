@@ -76,7 +76,7 @@ export const useComment = () =>{
       handleToggleUpdateMode(arr)
     }
     const handleChangeScore = (event: BaseSyntheticEvent ,arr: CommentsStruct | ReplyStruct) =>{
-      // if(arr.isChangeScore || arr.isCurrentlyUser) return
+      if(arr.isChangeScore || arr.isCurrentlyUser) return
 
       if(event.target.firstChild.data === " - " && arr.score > 0) arr.score--;
       else if(event.target.firstChild.data === " + ") arr.score++ 
@@ -123,7 +123,7 @@ export const useComment = () =>{
       const savedCommentsStates: CommentsStruct[] = []
       data.comments.map(( comment )=>{
         const singleComment: CommentsStruct = comment
-        console.log("singleComment", singleComment)
+        // console.log("singleComment", singleComment)
         savedCommentsStates.push(singleComment)
       })
       setComments(CheckCommentForCurrentUser(savedCommentsStates))
@@ -131,6 +131,10 @@ export const useComment = () =>{
 
     useEffect(()=>{
       setTimestamp(Date.now())
+    }, [comments])
+
+    useEffect(()=>{
+      comments.sort((a,b)=>{return b.score - a.score})
     }, [comments])
     return {
         singleComment,

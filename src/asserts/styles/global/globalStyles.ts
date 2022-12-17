@@ -16,5 +16,6 @@ body {
     padding: 0;
     font-family: 'Rubik', sans-serif;
     font-size: 16px;
+    overflow-x: hidden;
   }
 `;

@@ -6,10 +6,10 @@ import { SubimtButton } from "../../atoms/submitButton/SubimtButton";
 import { CommentsStruct, ReplyStruct } from "../../../asserts/interfaces/interfaces";
 
 interface Props { 
-    handleChangeScore: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct) => void,
+    handleChangeScore?: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct) => void,
     commentConent: string,
     arr: CommentsStruct | ReplyStruct,
-    score: number,
+    score?: number,
     isCurrentlyUser?: boolean,
     isUpdate?: boolean,
     handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void,
@@ -21,7 +21,6 @@ interface Props {
 export const CommentButton: React.FC<Props> = ({ arr,AdditionalValue, handleToggleReplying, handleChangContent, commentConent, handleOpenModal, handleSetUpdateMode,handleChangeScore, score, isCurrentlyUser, isUpdate}) => {
     return (
         <WrapRowButton>
-            <ScoreWrapp handleChangeScore={handleChangeScore} arr={arr} score={score} />
             {isUpdate ? 
             <SubimtButton AdditionalValue={AdditionalValue} newContent={commentConent} arr={arr} handleAction={handleChangContent}>UPDATE</SubimtButton>
             :

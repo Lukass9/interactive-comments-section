@@ -9,6 +9,7 @@ export const Button = styled.button`
     padding: 10px 20px;
     border: 1px solid hsl(238, 40%, 52%);
     border-radius: 5px;
+    max-height: 40px;
 `
 
 interface Props {

@@ -10,10 +10,17 @@ export const Wrapp = styled.main `
   `
 export const WrappComment = styled.section`
   display: flex;
+  position: relative;
   width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: end;
+
+  @media (min-width: 1440px){
+    /* align-items: center; */
+    width: 50%;
+    max-width: 725px;
+  }
 `
 export const WrappReplyComment = styled.div`
   position: relative;
@@ -22,9 +29,17 @@ export const WrappReplyComment = styled.div`
         content: " ";
         position: absolute;
         top: 0;
-        left: -5vw;
+        /* left: -5vw; */
+        left: 2.5vw;
         width: 1px;
         height: 100%;
         background-color: hsl(239, 57%, 85%)
+    }
+    @media (min-width: 1440px){
+    /* align-items: center; */
+      width: 93%;
+        &::before{
+          left: 1%;
+        }
     }
 ` 

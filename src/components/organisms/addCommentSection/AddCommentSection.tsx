@@ -2,15 +2,15 @@ import React, { BaseSyntheticEvent } from "react";
 import styled from "styled-components"
 import { SubimtButton } from "../../atoms/submitButton/SubimtButton";
 
-const Wrapp = styled.form`
+export const Wrapp = styled.form`
     position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: ${(props: {isReply: boolean})=> props.isReply? '90vw' : '95vw' };
+    width: 95%;
     background-color: #ffffff;
     padding: 20px;
-    margin: 9.375px 2.5vw 0 0;
+    margin: 9.375px 2.5% 0 0;
     border-radius: 10px;
 `
 const Avatar = styled.img`
@@ -29,6 +29,11 @@ export const CommentArea = styled.textarea`
     resize: none;
     color: #324152;
     margin-bottom: 10px;
+
+    @media (min-width: 1440px){
+        width: 80%;
+        order: 0;
+    }
 `
 interface commentSection {
     userImage: string,

@@ -1,10 +1,21 @@
 import styled from "styled-components"
 
 export const Wrapp = styled.div`
+    grid-area: 3/1/4/2;
+    align-self: center;
     display: flex;
     align-items: center;
     background-color: #f5f6fa;
     border-radius: 10px;
+    max-width: 96.36px;
+    max-height: 40px;
+
+    @media (min-width: 1440px){
+        grid-area: 1/1/3/2;
+        flex-direction: column;
+        max-width: 40px;
+        max-height: 96.36px;
+    } 
 `
 
 export const EditScore = styled.p`

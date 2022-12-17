@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
 export const WrapButton = styled.button`
+    grid-area: 3/5/4/6;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -10,6 +11,10 @@ export const WrapButton = styled.button`
     border: none;
     font-size: 16px;
     cursor: pointer;
+
+    @media (min-width: 1440px){
+        grid-area: 1/5/2/6;
+    }
 `
 
 export const ButtonText = styled.div` 

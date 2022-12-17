@@ -2,11 +2,14 @@ import { BaseSyntheticEvent } from "react";
 import { CommentsStruct, ReplyStruct, User } from "../../../asserts/interfaces/interfaces";
 import { WrapButton } from "../../atoms/Button/Button.style";
 import { SubimtButton } from "../../atoms/submitButton/SubimtButton";
-import { CommentAuthor } from "../../molecules/commentAuthor/commentAuthor";
 import { CommentAreaMod } from "../../atoms/comentAreaMod/ComentAreaMod"
+import { Wrapp } from "../addCommentSection/AddCommentSection";
+import { Avatar } from "../../atoms/avatar/Avatar";
+import { WrapButtonReply, WrappReply } from "./ReplyTextArea.style";
  
 interface Props {
-    isCurrentlyUser?: boolean,
+    isEdite?: boolean,
+    isReply?: boolean,
     arr: CommentsStruct | ReplyStruct,
     user: User,
     handleChangeReplying:(e: BaseSyntheticEvent) => void,
@@ -14,14 +17,14 @@ interface Props {
     handleReplying: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
 }
 
-export const ReplyTextArea: React.FC<Props> = ({arr, isCurrentlyUser, user, handleChangeReplying, newReplying, handleReplying}) => {
+export const ReplyTextArea: React.FC<Props> = ({arr, user, handleChangeReplying, newReplying, handleReplying, isReply, isEdite}) => {
 
     return (
-    <>
-        <CommentAuthor isCurrentlyUser={isCurrentlyUser} user={user} />
-        <CommentAreaMod  handleEditContent={handleChangeReplying} commentConent={newReplying} />
-        <WrapButton as="div">
+    <WrappReply isReply={isReply}>
+        <Avatar src={user.image.png} alt="Avatar"/> 
+        <CommentAreaMod  isEdite={isEdite} handleEditContent={handleChangeReplying} commentConent={newReplying} />
+        <WrapButtonReply as="div">
             <SubimtButton newContent={newReplying} arr={arr} handleAction={handleReplying}>REPLY</SubimtButton>
-        </WrapButton>
-    </>
+        </WrapButtonReply>
+    </WrappReply>
 )};

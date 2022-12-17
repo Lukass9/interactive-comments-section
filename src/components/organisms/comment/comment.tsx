@@ -4,6 +4,7 @@ import { CommentsStruct, ReplyStruct } from "../../../asserts/interfaces/interfa
 import { CommentAreaMod } from "../../atoms/comentAreaMod/ComentAreaMod";
 import { CommentAuthor } from "../../molecules/commentAuthor/commentAuthor";
 import { CommentButton } from "../../molecules/commentButton/commentButton";
+import { ScoreWrapp } from "../../molecules/scoreWrapp/ScoreWrapp";
 import { ReplyTextArea } from "../replyTextArea/ReplyTextArea";
 import { Content, Wrapp } from "./comment.style";
 
@@ -37,19 +38,18 @@ const Comment: React.FC<Props> = ({ arr, timestamp, handleChangeReplying, newRep
                 <CommentAuthor createdAt={createdAt} isCurrentlyUser={isCurrentlyUser} user={user} />
                 {isUpdate
                     ?
-                    <CommentAreaMod handleEditContent={handleEditContent} commentConent={commentConent} />
+                    <CommentAreaMod isEdite={true} handleEditContent={handleEditContent} commentConent={commentConent} />
                     :
                     <Content>
                         {content}
                     </Content>
                 }
+                <ScoreWrapp handleChangeScore={handleChangeScore} arr={arr} score={score} />
                 <CommentButton
                     arr={arr}
-                    score={score}
                     isCurrentlyUser={isCurrentlyUser}
                     isUpdate={isUpdate}
                     commentConent={commentConent}
-                    handleChangeScore={handleChangeScore}
                     handleSetUpdateMode={handleSetUpdateMode}
                     handleChangContent={handleChangContent}
                     handleOpenModal={handleOpenModal}
@@ -57,16 +57,15 @@ const Comment: React.FC<Props> = ({ arr, timestamp, handleChangeReplying, newRep
                 />
             </Wrapp>
             {isReplying ?
-                <Wrapp>
+                <>
                     <ReplyTextArea
-                        isCurrentlyUser={isCurrentlyUser}
                         user={user}
                         arr={arr}
                         handleChangeReplying={handleChangeReplying}
                         handleReplying={handleReplying}
                         newReplying={newReplying}
                     />
-                </Wrapp>
+                </>
                 : null}
         </>
 

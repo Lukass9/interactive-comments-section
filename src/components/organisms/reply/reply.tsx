@@ -4,8 +4,9 @@ import { CommentsStruct, ReplyStruct } from "../../../asserts/interfaces/interfa
 import { CommentAreaMod } from "../../atoms/comentAreaMod/ComentAreaMod";
 import { CommentAuthor } from "../../molecules/commentAuthor/commentAuthor";
 import { CommentButton } from "../../molecules/commentButton/commentButton";
+import { ScoreWrapp } from "../../molecules/scoreWrapp/ScoreWrapp";
 import { ReplyTextArea } from "../replyTextArea/ReplyTextArea";
-import { Content, ReplyingTo, Wrapp } from "./reply.style";
+import { Content, ReplyingTo, Wrapp, WrappForReply } from "./reply.style";
 
 interface Props {
     reply: ReplyStruct,
@@ -32,10 +33,6 @@ const Reply: React.FC<Props> = ({ reply, timestamp, handleChangeReplying, newRep
 
     useEffect(()=>{
         setTimestamForComment(postTimestamp, timestamp, reply)
-
-        // const rtf1 = new Intl.RelativeTimeFormat('en', { style: 'long' });
-        //   if(newPostTimestamp !== undefined) reply.createdAt = rtf1.format(Math.floor((newPostTimestamp - timestamp)/1000), "second")
-        //   console.log(timestamp)
         },[timestamp])
 
     return (
@@ -44,13 +41,14 @@ const Reply: React.FC<Props> = ({ reply, timestamp, handleChangeReplying, newRep
                 <CommentAuthor createdAt={createdAt} isCurrentlyUser={isCurrentlyUser} user={user} />
                 {isUpdate
                     ?
-                    <CommentAreaMod handleEditContent={handleEditContent} commentConent={commentConent}/>
+                    <CommentAreaMod isEdite={true} handleEditContent={handleEditContent} commentConent={commentConent}/>
                     :
                     <Content>
                         <ReplyingTo> @{replyingTo} </ReplyingTo>
                         {content}
                     </Content>
                 }
+                <ScoreWrapp handleChangeScore={handleChangeScore} arr={reply} score={score} />
                 <CommentButton
                     arr={reply}
                     score={score}
@@ -66,16 +64,16 @@ const Reply: React.FC<Props> = ({ reply, timestamp, handleChangeReplying, newRep
                 />
             </Wrapp>
             {isReplying? 
-            <Wrapp>
-                <ReplyTextArea 
-                    isCurrentlyUser={isCurrentlyUser} 
+            <WrappForReply>
+                <ReplyTextArea
+                    isReply={true}
                     user={user}
                     arr={reply}
                     handleChangeReplying={handleChangeReplying}
                     handleReplying={handleReplying}
                     newReplying={newReplying}
                     />
-            </Wrapp>
+            </WrappForReply>
             :null}
         </>
 

@@ -1,8 +1,13 @@
 import styled from "styled-components"
 
 export const WrapRow = styled.div`
+    grid-area: 1/1/2/6;
     display: flex;
     align-items: center;
+
+    @media (min-width: 1440px){
+        grid-area: 1/2/2/4;
+    }
 `
 export const UserName = styled.h1`
     font-size: 16px;

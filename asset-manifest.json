@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/interactive-comments-section/static/js/main.5706f7c0.js",
+    "static/js/787.6cd58c6b.chunk.js": "/interactive-comments-section/static/js/787.6cd58c6b.chunk.js",
+    "index.html": "/interactive-comments-section/index.html",
+    "main.5706f7c0.js.map": "/interactive-comments-section/static/js/main.5706f7c0.js.map",
+    "787.6cd58c6b.chunk.js.map": "/interactive-comments-section/static/js/787.6cd58c6b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.5706f7c0.js"
+  ]
+}

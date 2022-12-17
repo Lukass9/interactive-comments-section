@@ -10,6 +10,11 @@ export const Button = styled.button`
     border: 1px solid hsl(238, 40%, 52%);
     border-radius: 5px;
     max-height: 40px;
+    cursor: pointer;
+
+    :hover{
+        opacity: .5;
+    }
 `
 
 interface Props {

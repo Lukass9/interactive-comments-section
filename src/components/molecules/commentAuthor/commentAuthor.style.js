@@ -6,7 +6,7 @@ export const WrapRow = styled.div`
     align-items: center;
 
     @media (min-width: 1440px){
-        grid-area: 1/2/2/4;
+        grid-area: 1/2/2/5;
     }
 `
 export const UserName = styled.h1`

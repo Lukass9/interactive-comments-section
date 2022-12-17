@@ -12,6 +12,10 @@ export const WrapButton = styled.button`
     font-size: 16px;
     cursor: pointer;
 
+    :hover{
+        opacity: .5;
+    }
+
     @media (min-width: 1440px){
         grid-area: 1/5/2/6;
     }

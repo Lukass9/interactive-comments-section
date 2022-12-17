@@ -45,6 +45,10 @@ const Button = styled.button`
     background-color: ${(props:{color: string}) =>props.color};
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+    :hover{
+        opacity: .5;
+    }
 `
 
 const modalRoot = document.getElementById("modal") as HTMLElement;

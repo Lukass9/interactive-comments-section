@@ -20,7 +20,7 @@ interface Props {
 export const ReplyTextArea: React.FC<Props> = ({arr, user, handleChangeReplying, newReplying, handleReplying, isReply, isEdite}) => {
 
     return (
-    <WrappReply isReply={isReply}>
+    <WrappReply onSubmit={ (e:React.FormEvent<HTMLInputElement>) => e.preventDefault()} isReply={isReply}>
         <Avatar src={user.image.png} alt="Avatar"/> 
         <CommentAreaMod  isEdite={isEdite} handleEditContent={handleChangeReplying} commentConent={newReplying} />
         <WrapButtonReply as="div">

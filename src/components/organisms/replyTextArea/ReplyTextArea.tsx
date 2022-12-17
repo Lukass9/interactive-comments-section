@@ -21,7 +21,7 @@ export const ReplyTextArea: React.FC<Props> = ({arr, user, handleChangeReplying,
 
     return (
     <WrappReply onSubmit={ (e:React.FormEvent<HTMLInputElement>) => e.preventDefault()} isReply={isReply}>
-        <Avatar src={user.image.png} alt="Avatar"/> 
+        <Avatar src={process.env.PUBLIC_URL + user.image.png} alt="Avatar"/> 
         <CommentAreaMod  isEdite={isEdite} handleEditContent={handleChangeReplying} commentConent={newReplying} />
         <WrapButtonReply as="div">
             <SubimtButton newContent={newReplying} arr={arr} handleAction={handleReplying}>REPLY</SubimtButton>

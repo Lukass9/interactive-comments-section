@@ -31,19 +31,19 @@ export const CommentButton: React.FC<Props> = ({ arr,AdditionalValue, handleTogg
                         arr={arr}
                         text="Delete"
                         isDelete
-                        img="\images\icon-delete.svg" />
+                        img={process.env.PUBLIC_URL + '/images/icon-delete.svg'} />
                     <Button
                         handleAction={handleSetUpdateMode}
                         arr={arr}
                         text="Edit"
-                        img="\images\icon-edit.svg" />
+                        img={process.env.PUBLIC_URL + '/images/icon-edit.svg'}/>
                 </WrapRowButton>
                 :
                 <Button
                     handleAction={handleToggleReplying}
                     arr={arr}
                     text="Reply"
-                    img="\images\icon-reply.svg" />
+                    img={process.env.PUBLIC_URL + '/images/icon-reply.svg'} />
             }
         </WrapRowButton>
     )

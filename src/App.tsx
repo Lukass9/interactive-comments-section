@@ -5,8 +5,6 @@ import { useComment } from './asserts/helpers/hooks/useComment';
 import Reply from './components/organisms/reply/reply';
 import { Modal } from './components/organisms/modal/modal';
 
-// TODO - dodaj Intl.RelativeTimeFormat do odmierzania czasu w komentarzach
-
 const App: React.FC = () => {
   const { comments, 
           currentUser, 

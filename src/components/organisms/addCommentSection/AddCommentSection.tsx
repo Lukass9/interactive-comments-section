@@ -47,7 +47,7 @@ const AddCommentSection: React.FC<commentSection> = ({userImage, singleComment, 
         <Wrapp 
             isReply={isReply}
             onSubmit={handleAddComment}>
-            <Avatar src={userImage} alt="userAvatar"/>
+            <Avatar src={process.env.PUBLIC_URL + userImage} alt="userAvatar"/>
             <CommentArea onChange={handleSetSingleComment} value={singleComment} type="textarea" placeholder="Add a comment..."/>
             <SubimtButton>SEND</SubimtButton>
         </Wrapp>

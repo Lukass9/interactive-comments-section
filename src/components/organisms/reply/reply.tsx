@@ -9,20 +9,21 @@ import { ReplyTextArea } from "../replyTextArea/ReplyTextArea";
 import { Content, ReplyingTo, Wrapp, WrappForReply } from "./reply.style";
 
 interface Props {
+    collectionId: string | undefined,
     reply: ReplyStruct,
     newReplying: string,
     timestamp: number,
-    handleChangeScore: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct) => void,
+    handleChangeScore: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct, collectionId: string | undefined) => void,
     handleReplying: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
     handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void
-    handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
+    handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string, collectionId: string | undefined) => void,
     handleOpenModal: (arr: CommentsStruct | ReplyStruct) => void,
     handleToggleReplying: (arr: CommentsStruct | ReplyStruct) => void,
     handleChangeReplying:(e: BaseSyntheticEvent) => void,
     key: React.Key,
 }
 
-const Reply: React.FC<Props> = ({ reply, timestamp, handleChangeReplying, newReplying, handleToggleReplying, handleChangContent, handleSetUpdateMode, handleOpenModal, handleChangeScore, handleReplying, key }) => {
+const Reply: React.FC<Props> = ({collectionId, reply, timestamp, handleChangeReplying, newReplying, handleToggleReplying, handleChangContent, handleSetUpdateMode, handleOpenModal, handleChangeScore, handleReplying, key }) => {
     const { user, replyingTo, content, createdAt, score, isCurrentlyUser, isUpdate, isReplying, timestamp: postTimestamp} = reply
     const AdditionalValueForContent = {value: `@${replyingTo}, `}
     const AdditionalValue = AdditionalValueForContent.value
@@ -48,8 +49,9 @@ const Reply: React.FC<Props> = ({ reply, timestamp, handleChangeReplying, newRep
                         {content}
                     </Content>
                 }
-                <ScoreWrapp handleChangeScore={handleChangeScore} arr={reply} score={score} />
+                <ScoreWrapp handleChangeScore={handleChangeScore} arr={reply} score={score} collectionId={collectionId} />
                 <CommentButton
+                    collectionId={collectionId}
                     arr={reply}
                     score={score}
                     isCurrentlyUser={isCurrentlyUser}

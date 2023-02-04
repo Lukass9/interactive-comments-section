@@ -14,5 +14,4 @@ export const initialState: CommentsStruct[] = [{
   score: 0,
   user: currentUserInitState,
   isCurrentlyUser: false
-
 }]

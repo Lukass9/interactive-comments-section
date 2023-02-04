@@ -18,14 +18,15 @@ export const Button = styled.button`
 `
 
 interface Props {
-    children: string
+    collectionId?: string | undefined,
+    children: string,
     arr?: CommentsStruct | ReplyStruct,
     newContent?: string,
-    handleAction?: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
+    handleAction?: (arr: CommentsStruct | ReplyStruct, newContent: string, collectionId?: string | undefined) => void,
     AdditionalValue?: string,
 }   
 
-export const SubimtButton: React.FC<Props> = ({children,AdditionalValue, handleAction, arr, newContent}) => {
+export const SubimtButton: React.FC<Props> = ({children,AdditionalValue, handleAction, arr, newContent, collectionId}) => {
     return (
         <>
             {handleAction && arr && newContent
@@ -33,7 +34,7 @@ export const SubimtButton: React.FC<Props> = ({children,AdditionalValue, handleA
                 <Button onClick={()=>{
                     let replyingToIndex = AdditionalValue? newContent.indexOf(AdditionalValue): 0
                     if(replyingToIndex >= 0 && AdditionalValue) replyingToIndex = replyingToIndex + AdditionalValue.length
-                    handleAction(arr, newContent.substring(replyingToIndex))
+                    handleAction(arr, newContent.substring(replyingToIndex), collectionId)
                 }}> {children} </Button>
             :
                 <Button> {children} </Button>

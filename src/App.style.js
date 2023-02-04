@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapp = styled.main `
+export const Wrapp = styled.main`
   display: flex;
   flex-direction: column;
   width: 100vw;

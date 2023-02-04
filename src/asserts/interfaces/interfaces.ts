@@ -7,6 +7,7 @@ export interface User {
 
 export interface BasicCommentStruct{
   id: number,
+  collectionId?: string,
   content: string,
   createdAt: string,
   timestamp?: number,
@@ -23,5 +24,15 @@ export interface ReplyStruct extends BasicCommentStruct{
 }
 
 export interface CommentsStruct extends BasicCommentStruct{
-    replies?:  ReplyStruct[],
+  replies?:  ReplyStruct[],
+}
+export type LogedUser = {
+  email: string;
+  uid: string;
+  currentUser: {
+      authProvider: string;
+      email: string;
+      name: string;
+      uid: string;
+  }
 }

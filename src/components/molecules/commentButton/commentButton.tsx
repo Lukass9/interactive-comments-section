@@ -6,23 +6,24 @@ import { SubimtButton } from "../../atoms/submitButton/SubimtButton";
 import { CommentsStruct, ReplyStruct } from "../../../asserts/interfaces/interfaces";
 
 interface Props { 
-    handleChangeScore?: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct) => void,
+    collectionId: string | undefined,
+    handleChangeScore?: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct, collectionId: string | undefined ) => void,
     commentConent: string,
     arr: CommentsStruct | ReplyStruct,
     score?: number,
     isCurrentlyUser?: boolean,
     isUpdate?: boolean,
     handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void,
-    handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string)=> void,
+    handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string, collectionId: string | undefined)=> void,
     handleOpenModal: (arr: CommentsStruct | ReplyStruct) => void,
     handleToggleReplying: (arr: CommentsStruct | ReplyStruct) => void,
     AdditionalValue?: string,
 }
-export const CommentButton: React.FC<Props> = ({ arr,AdditionalValue, handleToggleReplying, handleChangContent, commentConent, handleOpenModal, handleSetUpdateMode,handleChangeScore, score, isCurrentlyUser, isUpdate}) => {
+export const CommentButton: React.FC<Props> = ({ collectionId, arr,AdditionalValue, handleToggleReplying, handleChangContent, commentConent, handleOpenModal, handleSetUpdateMode,handleChangeScore, score, isCurrentlyUser, isUpdate}) => {
     return (
         <WrapRowButton>
             {isUpdate ? 
-            <SubimtButton AdditionalValue={AdditionalValue} newContent={commentConent} arr={arr} handleAction={handleChangContent}>UPDATE</SubimtButton>
+            <SubimtButton collectionId={collectionId} AdditionalValue={AdditionalValue} newContent={commentConent} arr={arr} handleAction={handleChangContent}>UPDATE</SubimtButton>
             :
             isCurrentlyUser ?
                 <WrapRowButton>

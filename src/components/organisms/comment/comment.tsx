@@ -9,12 +9,13 @@ import { ReplyTextArea } from "../replyTextArea/ReplyTextArea";
 import { Content, Wrapp } from "./comment.style";
 
 interface Props {
+    collectionId: string | undefined,
     arr: CommentsStruct,
     newReplying: string,
     timestamp: number,
-    handleChangeScore: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct) => void,
+    handleChangeScore: (event: BaseSyntheticEvent, arr: CommentsStruct | ReplyStruct, collectionId: string | undefined) => void,
     handleReplying: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
-    handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string) => void,
+    handleChangContent: (arr: CommentsStruct | ReplyStruct, newContent: string, collectionId: string | undefined) => void,
     handleSetUpdateMode: (arr: CommentsStruct | ReplyStruct) => void,
     handleOpenModal: (arr: CommentsStruct | ReplyStruct) => void,
     handleToggleReplying: (arr: CommentsStruct | ReplyStruct) => void,
@@ -22,13 +23,12 @@ interface Props {
     key: React.Key,
 }
 
-const Comment: React.FC<Props> = ({ arr, timestamp, handleChangeReplying, newReplying, handleToggleReplying, handleSetUpdateMode, handleOpenModal, handleChangContent, handleChangeScore, handleReplying, key }) => {
+const Comment: React.FC<Props> = ({collectionId, arr, timestamp, handleChangeReplying, newReplying, handleToggleReplying, handleSetUpdateMode, handleOpenModal, handleChangContent, handleChangeScore, handleReplying, key }) => {
     const { user, content, createdAt, score, isCurrentlyUser, isUpdate, isReplying, timestamp: postTimestamp} = arr
     const [commentConent, setCommentContent] = useState(content)
     const handleEditContent = (e: BaseSyntheticEvent) => {
         setCommentContent(e.target.value)
     }
-
     useEffect(()=>{
         setTimestamForComment(postTimestamp, timestamp, arr)
     },[timestamp])
@@ -43,9 +43,11 @@ const Comment: React.FC<Props> = ({ arr, timestamp, handleChangeReplying, newRep
                     <Content>
                         {content}
                     </Content>
+                    
                 }
-                <ScoreWrapp handleChangeScore={handleChangeScore} arr={arr} score={score} />
+                <ScoreWrapp handleChangeScore={handleChangeScore} arr={arr} score={score} collectionId={collectionId}/>
                 <CommentButton
+                    collectionId={collectionId}
                     arr={arr}
                     isCurrentlyUser={isCurrentlyUser}
                     isUpdate={isUpdate}
@@ -56,6 +58,7 @@ const Comment: React.FC<Props> = ({ arr, timestamp, handleChangeReplying, newRep
                     handleToggleReplying={handleToggleReplying}
                 />
             </Wrapp>
+
             {isReplying ?
                 <>
                     <ReplyTextArea

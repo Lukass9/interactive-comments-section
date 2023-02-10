@@ -26,7 +26,7 @@ export const SingIn: React.FC<Props> = props => {
                     const doc = await getDocs(q)
                     const currentUser = doc.docs[0].data()
                     localStorage.setItem('auth', JSON.stringify({email, uid, currentUser}))
-                    navigate("/")
+                    navigate("/interactive-comments-section")
                 }catch(err){
                     console.log(err)
                 }

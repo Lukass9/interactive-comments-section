@@ -1,9 +1,9 @@
 import styled from "styled-components"
-import { auth, registerWithEmailAndPassword } from "../../../firebase";
+import { auth, logInWithEmailAndPassword, registerWithEmailAndPassword } from "../../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { SetStateAction, useEffect, useState } from "react";
 import { FormWrapp, Input, Label, LabelWrapp, Wrapp } from "./register";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../atoms/submitButton/SubimtButton";
 interface Props { }
 
@@ -12,6 +12,7 @@ export const SingUp: React.FC<Props> = props => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate();
 
     useEffect(() => {
         console.log("user", user)
@@ -33,14 +34,15 @@ export const SingUp: React.FC<Props> = props => {
                     <Input required type="password" name="Password" id="Password" value={password} onChange={(e: { target: { value: SetStateAction<string>; }; }) => setPassword(e.target.value)} />
                     <Label htmlFor="Password"> Password </Label>
                 </LabelWrapp>
-                <Button onClick={(e: { preventDefault: () => void; }) => {
+                <Button to="/" onClick={(e: { preventDefault: () => void; }) => {
                     e.preventDefault()
                     registerWithEmailAndPassword(name, email, password)
                     setName('')
                     setEmail('')
                     setPassword('')
+                    navigate("/interactive-comments-section")
                 }}> Sing up </Button>
-                <p> Have allready an account? <Link to="/SingIn">Sing in</Link></p>
+                <p> Have allready an account? <Link to="/interactive-comments-section/SingIn">Sing in</Link></p>
             </FormWrapp>
         </Wrapp>
     )

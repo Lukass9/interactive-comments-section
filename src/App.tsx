@@ -9,9 +9,9 @@ const App: React.FC = () => {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path={"/"} element={<Comments/>}/>
-        <Route path={"/SingUp"} element={<SingUp/>}/>
-        <Route path={"/SingIn"} element={<SingIn/>}/>
+        <Route path={"/interactive-comments-section"} element={<Comments/>}/>
+        <Route path={"/interactive-comments-section/SingUp"} element={<SingUp/>}/>
+        <Route path={"/interactive-comments-section/SingIn"} element={<SingIn/>}/>
       </Routes>
     </BrowserRouter>
     </>

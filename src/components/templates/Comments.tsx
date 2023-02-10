@@ -23,12 +23,12 @@ export const Comments: React.FC<Props> = props => {
   useEffect(()=>{
     const auth = localStorage.getItem("auth")
     if(auth) setLogedUser(JSON.parse(auth))
-    else navigate("/SingIn")
+    else navigate("/interactive-comments-section/SingIn")
   },[])
 
   useEffect(()=>{
     const auth = localStorage.getItem("auth")
-    if(!auth) navigate("/SingIn")
+    if(!auth) navigate("/interactive-comments-section/SingIn")
   }, [logedUser])
 
   const { comments,

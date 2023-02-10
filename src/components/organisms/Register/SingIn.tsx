@@ -52,7 +52,7 @@ export const SingIn: React.FC<Props> = props => {
                     setEmail('')
                     setPassword('')
                 }}> Sing in </Button>
-                <p>You dont have an account yet? <Link to="/SingUp">Sign up</Link>  now!</p>
+                <p>You dont have an account yet? <Link to="/interactive-comments-section/SingUp">Sign up</Link>  now!</p>
             </FormWrapp>
         </Wrapp>
     )

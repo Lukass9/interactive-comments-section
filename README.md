@@ -2,6 +2,10 @@
 
 > A project that involves an interactive comments section, allowing users to perform CRUD operations on comments and replies. The design aims for responsiveness across various screen sizes and incorporates hover states for interactive elements. Comments and replies feature upvoting/downvoting functionality and utilize `localStorage` for state persistence. Additionally, dynamic timestamps are employed for comment and reply creation. The comment system and rating functionality are stored and managed within Firebase, providing a scalable and real-time database solution. Firebase authentication enables user register and login functionality.
 > Live demo [_here_](https://lukass9.github.io/interactive-comments-section/).
+> To test the application, please log in with the following credentials:
+>
+> - **Email:** test@test.pl
+> - **Password:** test123
 
 ### Features
 

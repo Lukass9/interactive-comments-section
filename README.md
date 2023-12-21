@@ -27,12 +27,7 @@
 - TypeScript - version 4.9.5
 - Framer Motion - version 10.6.0
 - Styled Components - version 5.3.6
-- Jest (Testing Library) - version 13.4.0
-- React Hook Form - version 7.43.4
-- Web Vitals - version 2.1.4
-- gh-pages - version 6.0.0
-- @types/styled-components - version 5.1.26
-- jest-watch-typeahead - version 0.6.5
+- Firebase - version 9.15.0
 
 ## Screenshots
 

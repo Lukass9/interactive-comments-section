@@ -1,46 +1,64 @@
-# Getting Started with Create React App
+# Interactive Comments Section
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> A project that involves an interactive comments section, allowing users to perform CRUD operations on comments and replies. The design aims for responsiveness across various screen sizes and incorporates hover states for interactive elements. Comments and replies feature upvoting/downvoting functionality and utilize `localStorage` for state persistence. Additionally, dynamic timestamps are employed for comment and reply creation. The comment system and rating functionality are stored and managed within Firebase, providing a scalable and real-time database solution. Firebase authentication enables user register and login functionality.
+> Live demo [_here_](https://lukass9.github.io/interactive-comments-section/).
 
-## Available Scripts
+### Features
 
-In the project directory, you can run:
+- Responsive layout for different screen sizes
+- Hover states for interactive elements
+- CRUD operations for comments and replies
+- Upvoting and downvoting comments
+- Utilization of `localStorage` to persist state
+- Dynamic timestamp functionality for comment and reply creation
+- Firebase integration for comments and rating system
+- Firebase authentication for user login
 
-### `npm start`
+### Expected Behavior
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- First-level comments sorted by score; nested replies sorted by time
+- New replies added to the bottom of nested replies within a comment
+- Confirmation modal before deleting comments or replies
+- Limited editing and deletion to one's own comments and replies
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+- React - version 18.2.0
+- TypeScript - version 4.9.5
+- Framer Motion - version 10.6.0
+- Styled Components - version 5.3.6
+- Jest (Testing Library) - version 13.4.0
+- React Hook Form - version 7.43.4
+- Web Vitals - version 2.1.4
+- gh-pages - version 6.0.0
+- @types/styled-components - version 5.1.26
+- jest-watch-typeahead - version 0.6.5
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Screenshots
 
-### `npm run build`
+### Desktop
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![desktop](dessktop.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Mobile
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![mobile](mobile.png)
 
-### `npm run eject`
+#### signIn/signUp
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![signin](login.png) ![signUp](register.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Reply
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![reply](reply.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Setup and Usage
 
-## Learn More
+- Clone the repository
+- Install dependencies with `npm install` or `yarn install`
+- Run the application locally with `npm start start` or `yarn start start`
+- Visit [localhost](http://localhost:3000) in your browser to view the application
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Contact
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Created by [@Lukass9](https://github.com/Lukass9) - Feel free to reach out!
